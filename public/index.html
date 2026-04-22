@@ -109,6 +109,15 @@
       font-size: 0.85rem;
       display: none;
     }
+
+    .btn-download {
+      margin-top: 1rem;
+      background: #1e3a2f;
+      border: 1px solid #2e6b4f;
+      color: #4caf87;
+    }
+
+    .btn-download:hover { background: #1a4d3a; }
   </style>
 </head>
 <body>
@@ -133,6 +142,7 @@
       <div class="warning">
         &#9888; Never share your private key. This page is for local use only.
       </div>
+      <button class="btn-download" onclick="downloadTxt()">&#8595; Download as .txt</button>
     </div>
   </div>
 
@@ -159,6 +169,18 @@
         btn.disabled = false;
         btn.textContent = 'Generate Keypair';
       }
+    }
+
+    function downloadTxt() {
+      const address = document.getElementById('address').textContent;
+      const privateKey = document.getElementById('privateKey').textContent;
+      const content = `Ethereum Keypair\n${'='.repeat(40)}\nAddress (Public):\n${address}\n\nPrivate Key:\n${privateKey}\n\nWARNING: Never share your private key with anyone.\n`;
+      const blob = new Blob([content], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'ethereum-keypair.txt';
+      a.click();
+      URL.revokeObjectURL(a.href);
     }
 
     function copy(id) {
