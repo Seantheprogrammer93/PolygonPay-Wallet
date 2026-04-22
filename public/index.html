@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PolygonPay — Key Generator</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0f0f0f;
+      color: #e0e0e0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 2.5rem 2rem;
+      width: 100%;
+      max-width: 560px;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+      margin-bottom: 0.4rem;
+      color: #fff;
+    }
+
+    p.subtitle {
+      font-size: 0.85rem;
+      color: #888;
+      margin-bottom: 2rem;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      background: #7b3fe4;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    button:hover { background: #6530c2; }
+    button:disabled { background: #444; cursor: not-allowed; }
+
+    .result {
+      margin-top: 1.5rem;
+      display: none;
+    }
+
+    .field {
+      margin-bottom: 1.2rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #888;
+      margin-bottom: 0.4rem;
+    }
+
+    .value {
+      background: #111;
+      border: 1px solid #2a2a2a;
+      border-radius: 6px;
+      padding: 0.6rem 0.8rem;
+      font-family: monospace;
+      font-size: 0.82rem;
+      word-break: break-all;
+      color: #c9b8ff;
+      cursor: pointer;
+      position: relative;
+      transition: border-color 0.2s;
+    }
+
+    .value:hover { border-color: #7b3fe4; }
+
+    .copy-hint {
+      font-size: 0.7rem;
+      color: #555;
+      margin-top: 0.25rem;
+    }
+
+    .warning {
+      margin-top: 1.5rem;
+      padding: 0.75rem 1rem;
+      background: #2a1a00;
+      border: 1px solid #7a4800;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      color: #f0a040;
+    }
+
+    .error {
+      margin-top: 1rem;
+      color: #f06060;
+      font-size: 0.85rem;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Ethereum Key Generator</h1>
+    <p class="subtitle">Generates a new keypair using a cryptographically secure random source on the server.</p>
+
+    <button id="btn" onclick="generate()">Generate Keypair</button>
+    <p class="error" id="error"></p>
+
+    <div class="result" id="result">
+      <div class="field">
+        <label>Ethereum Address (Public)</label>
+        <div class="value" id="address" onclick="copy('address')" title="Click to copy"></div>
+        <p class="copy-hint">Click to copy</p>
+      </div>
+      <div class="field">
+        <label>Private Key</label>
+        <div class="value" id="privateKey" onclick="copy('privateKey')" title="Click to copy"></div>
+        <p class="copy-hint">Click to copy</p>
+      </div>
+      <div class="warning">
+        &#9888; Never share your private key. This page is for local use only.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    async function generate() {
+      const btn = document.getElementById('btn');
+      const errorEl = document.getElementById('error');
+      btn.disabled = true;
+      btn.textContent = 'Generating...';
+      errorEl.style.display = 'none';
+
+      try {
+        const res = await fetch('/generate');
+        if (!res.ok) throw new Error('Server error');
+        const data = await res.json();
+
+        document.getElementById('address').textContent = data.address;
+        document.getElementById('privateKey').textContent = data.privateKey;
+        document.getElementById('result').style.display = 'block';
+      } catch (e) {
+        errorEl.textContent = 'Failed to generate keypair. Is the server running?';
+        errorEl.style.display = 'block';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Generate Keypair';
+      }
+    }
+
+    function copy(id) {
+      const text = document.getElementById(id).textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const el = document.getElementById(id);
+        const orig = el.textContent;
+        el.textContent = 'Copied!';
+        setTimeout(() => el.textContent = orig, 1200);
+      });
+    }
+  </script>
+</body>
+</html>
