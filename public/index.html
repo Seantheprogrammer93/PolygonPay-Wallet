@@ -94,11 +94,16 @@
       const privateKey = document.getElementById('privateKey').textContent;
       const content = JSON.stringify({ address, privateKey, warning: 'Never share your private key with anyone.' }, null, 2);
       const blob = new Blob([content], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
+      a.href = url;
       a.download = 'ethereum-keypair.json';
+      // Appending to body is required for Safari iOS — programmatic clicks on
+      // detached elements are silently ignored on that platform.
+      document.body.appendChild(a);
       a.click();
-      URL.revokeObjectURL(a.href);
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
     }
 
     function handleImport(event) {
@@ -257,15 +262,45 @@
 
     function copy(id) {
       const text = document.getElementById(id).textContent;
-      navigator.clipboard.writeText(text).then(() => {
-        const el = document.getElementById(id);
-        const orig = el.textContent;
+      const el = document.getElementById(id);
+      const orig = el.textContent;
+
+      function showCopied() {
         el.textContent = 'Copied!';
         setTimeout(() => el.textContent = orig, 1200);
-      });
+      }
+
+      // navigator.clipboard requires a secure context (HTTPS). Fall back to
+      // the legacy execCommand approach for plain HTTP environments.
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(showCopied).catch(() => fallbackCopy(text, showCopied));
+      } else {
+        fallbackCopy(text, showCopied);
+      }
     }
 
-    initDB().then(() => renderWallets());
+    function fallbackCopy(text, onSuccess) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      try {
+        if (document.execCommand('copy')) onSuccess();
+      } finally {
+        document.body.removeChild(ta);
+      }
+    }
+
+    initDB().then(() => renderWallets()).catch(() => {
+      // IndexedDB is unavailable — most commonly in Safari private browsing mode.
+      // The app remains fully functional; wallets just won't be persisted.
+      const notice = document.createElement('p');
+      notice.textContent = 'Note: Wallet storage is unavailable in private browsing mode. Generated wallets will not be saved.';
+      notice.style.cssText = 'margin-top:0.75rem;font-size:0.78rem;color:#f0a040;';
+      document.querySelector('.card').appendChild(notice);
+    });
   </script>
 </body>
 
