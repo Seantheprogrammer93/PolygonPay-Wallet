@@ -15,16 +15,12 @@
     <p class="subtitle">Generate a new keypair entirely in your browser. Your private key never leaves your device.</p>
 
     <button id="btn" onclick="generate()">Generate Wallet</button>
+    <input type="file" id="importFile" accept=".json" style="display:none" onchange="handleImport(event)"
+      aria-label="Select a wallet JSON file to import" />
+    <button class="btn-import" onclick="document.getElementById('importFile').click()" style="margin-top:0.6rem;"
+      aria-label="Import wallet from JSON file"><span aria-hidden="true">&#8593;</span> Import from .json</button>
     <p class="error" id="error" role="alert" aria-live="assertive" aria-atomic="true"></p>
-
-    <div class="import-section">
-      <p class="import-label">Already have a keypair? Import it from a .json file:</p>
-      <input type="file" id="importFile" accept=".json" style="display:none" onchange="handleImport(event)"
-        aria-label="Select a wallet JSON file to import" />
-      <button class="btn-import" onclick="document.getElementById('importFile').click()"
-        aria-label="Import wallet from JSON file"><span aria-hidden="true">&#8593;</span> Import from .json</button>
-      <p class="error" id="import-error" role="alert" aria-live="assertive" aria-atomic="true"></p>
-    </div>
+    <p class="error" id="import-error" role="alert" aria-live="assertive" aria-atomic="true"></p>
 
     <div class="wallets-section" id="wallets-section" style="display:none" role="region" aria-label="Saved wallets">
       <div class="wallets-header">
