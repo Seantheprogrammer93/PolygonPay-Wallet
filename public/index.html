@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>PolygonPay — Key Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PolygonPay Wallet</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -38,6 +43,16 @@
       margin-bottom: 2rem;
     }
 
+    p.disclaimer {
+      margin-top: 1.5rem;
+      padding: 0.75rem 1rem;
+      background: #2a1a00;
+      border: 1px solid #7a4800;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      color: #f0a040;
+    }
+
     button {
       width: 100%;
       padding: 0.75rem;
@@ -50,8 +65,14 @@
       transition: background 0.2s;
     }
 
-    button:hover { background: #6530c2; }
-    button:disabled { background: #444; cursor: not-allowed; }
+    button:hover {
+      background: #6530c2;
+    }
+
+    button:disabled {
+      background: #444;
+      cursor: not-allowed;
+    }
 
     .result {
       margin-top: 1.5rem;
@@ -85,7 +106,9 @@
       transition: border-color 0.2s;
     }
 
-    .value:hover { border-color: #7b3fe4; }
+    .value:hover {
+      border-color: #7b3fe4;
+    }
 
     .copy-hint {
       font-size: 0.7rem;
@@ -117,16 +140,22 @@
       color: #4caf87;
     }
 
-    .btn-download:hover { background: #1a4d3a; }
+    .btn-download:hover {
+      background: #1a4d3a;
+    }
   </style>
 </head>
+
 <body>
   <div class="card">
-    <h1>Ethereum Key Generator</h1>
-    <p class="subtitle">Generates a new keypair using a cryptographically secure random source on the server.</p>
+    <h1>PolygonPay Wallet</h1>
+    <p class="subtitle">Generate a new keypair using a cryptographically secure random source on the server.</p>
 
-    <button id="btn" onclick="generate()">Generate Keypair</button>
+    <button id="btn" onclick="generate()">Generate Wallet</button>
     <p class="error" id="error"></p>
+
+    <p class="disclaimer">Note: PolygonPay is a non-custodial cryptocurrency wallet. <u>You are responsible for keeping your private key
+      safe!</u> <a href="https://ethereum.org/en/wallets/" target="_blank" rel="noopener noreferrer" style="color:#4a9eff;">Learn more <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:middle;"><path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/><path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/></svg></a></p>
 
     <div class="result" id="result">
       <div class="field">
@@ -167,7 +196,7 @@
         errorEl.style.display = 'block';
       } finally {
         btn.disabled = false;
-        btn.textContent = 'Generate Keypair';
+        btn.textContent = 'Generate Wallet';
       }
     }
 
@@ -194,4 +223,5 @@
     }
   </script>
 </body>
+
 </html>
