@@ -146,6 +146,29 @@
     .btn-download:hover {
       background: #1a4d3a;
     }
+
+    .btn-import {
+      margin-top: 0.75rem;
+      background: #1a2a3a;
+      border: 1px solid #2e5080;
+      color: #5aabf0;
+    }
+
+    .btn-import:hover {
+      background: #1a3550;
+    }
+
+    .import-section {
+      margin-top: 1.5rem;
+      border-top: 1px solid #2a2a2a;
+      padding-top: 1.5rem;
+    }
+
+    .import-label {
+      font-size: 0.8rem;
+      color: #888;
+      margin-bottom: 0.6rem;
+    }
   </style>
 </head>
 
@@ -156,6 +179,15 @@
 
     <button id="btn" onclick="generate()">Generate Wallet</button>
     <p class="error" id="error" role="alert" aria-live="assertive" aria-atomic="true"></p>
+
+    <div class="import-section">
+      <p class="import-label">Already have a keypair? Import it from a .json file:</p>
+      <input type="file" id="importFile" accept=".json" style="display:none" onchange="handleImport(event)"
+        aria-label="Select a wallet JSON file to import" />
+      <button class="btn-import" onclick="document.getElementById('importFile').click()"
+        aria-label="Import wallet from JSON file"><span aria-hidden="true">&#8593;</span> Import from .json</button>
+      <p class="error" id="import-error" role="alert" aria-live="assertive" aria-atomic="true"></p>
+    </div>
 
     <p class="disclaimer">Note: PolygonPay is a non-custodial cryptocurrency wallet. <u>You are responsible for keeping
         your private key
@@ -223,6 +255,45 @@
       a.download = 'ethereum-keypair.json';
       a.click();
       URL.revokeObjectURL(a.href);
+    }
+
+    function handleImport(event) {
+      const file = event.target.files[0];
+      const importErrorEl = document.getElementById('import-error');
+      const errorEl = document.getElementById('error');
+      importErrorEl.style.display = 'none';
+      errorEl.style.display = 'none';
+
+      if (!file) return;
+
+      // Reset so the same file can be re-imported if needed
+      event.target.value = '';
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        try {
+          const data = JSON.parse(e.target.result);
+          if (typeof data.address !== 'string' || typeof data.privateKey !== 'string') {
+            throw new Error('Missing address or privateKey fields.');
+          }
+          // Validate via ethers: reconstruct wallet from private key and verify address matches
+          const wallet = new ethers.Wallet(data.privateKey);
+          if (wallet.address.toLowerCase() !== data.address.toLowerCase()) {
+            throw new Error('Private key does not match the address in this file.');
+          }
+          document.getElementById('address').textContent = wallet.address;
+          document.getElementById('privateKey').textContent = wallet.privateKey;
+          document.getElementById('result').style.display = 'block';
+        } catch (err) {
+          importErrorEl.textContent = 'Import failed: ' + (err.message || 'Invalid wallet file.');
+          importErrorEl.style.display = 'block';
+        }
+      };
+      reader.onerror = function () {
+        importErrorEl.textContent = 'Import failed: Could not read file.';
+        importErrorEl.style.display = 'block';
+      };
+      reader.readAsText(file);
     }
 
     function copy(id) {
