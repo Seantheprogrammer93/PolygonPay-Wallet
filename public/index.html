@@ -6,170 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PolygonPay Wallet</title>
   <script src="https://cdn.jsdelivr.net/npm/ethers@6.16.0/dist/ethers.umd.min.js" crossorigin="anonymous"></script>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: #0f0f0f;
-      color: #e0e0e0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
-
-    .card {
-      background: #1a1a1a;
-      border: 1px solid #2a2a2a;
-      border-radius: 12px;
-      padding: 2.5rem 2rem;
-      width: 100%;
-      max-width: 560px;
-    }
-
-    h1 {
-      font-size: 1.4rem;
-      margin-bottom: 0.4rem;
-      color: #fff;
-    }
-
-    p.subtitle {
-      font-size: 0.85rem;
-      color: #888;
-      margin-bottom: 2rem;
-    }
-
-    p.disclaimer {
-      margin-top: 1.5rem;
-      padding: 0.75rem 1rem;
-      background: #2a1a00;
-      border: 1px solid #7a4800;
-      border-radius: 6px;
-      font-size: 0.8rem;
-      color: #f0a040;
-    }
-
-    button {
-      width: 100%;
-      padding: 0.75rem;
-      background: #7b3fe4;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    button:hover {
-      background: #6530c2;
-    }
-
-    button:disabled {
-      background: #444;
-      cursor: not-allowed;
-    }
-
-    .result {
-      margin-top: 1.5rem;
-      display: none;
-    }
-
-    .field {
-      margin-bottom: 1.2rem;
-    }
-
-    label {
-      display: block;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #888;
-      margin-bottom: 0.4rem;
-    }
-
-    .value {
-      background: #111;
-      border: 1px solid #2a2a2a;
-      border-radius: 6px;
-      padding: 0.6rem 0.8rem;
-      font-family: monospace;
-      font-size: 0.82rem;
-      word-break: break-all;
-      overflow-wrap: break-word;
-      white-space: normal;
-      color: #c9b8ff;
-      cursor: pointer;
-      position: relative;
-      transition: border-color 0.2s;
-    }
-
-    .value:hover {
-      border-color: #7b3fe4;
-    }
-
-    .copy-hint {
-      font-size: 0.7rem;
-      color: #555;
-      margin-top: 0.25rem;
-    }
-
-    .warning {
-      margin-top: 1.5rem;
-      padding: 0.75rem 1rem;
-      background: #2a1a00;
-      border: 1px solid #7a4800;
-      border-radius: 6px;
-      font-size: 0.8rem;
-      color: #f0a040;
-    }
-
-    .error {
-      margin-top: 1rem;
-      color: #f06060;
-      font-size: 0.85rem;
-      display: none;
-    }
-
-    .btn-download {
-      margin-top: 1rem;
-      background: #1e3a2f;
-      border: 1px solid #2e6b4f;
-      color: #4caf87;
-    }
-
-    .btn-download:hover {
-      background: #1a4d3a;
-    }
-
-    .btn-import {
-      margin-top: 0.75rem;
-      background: #1a2a3a;
-      border: 1px solid #2e5080;
-      color: #5aabf0;
-    }
-
-    .btn-import:hover {
-      background: #1a3550;
-    }
-
-    .import-section {
-      margin-top: 1.5rem;
-      border-top: 1px solid #2a2a2a;
-      padding-top: 1.5rem;
-    }
-
-    .import-label {
-      font-size: 0.8rem;
-      color: #888;
-      margin-bottom: 0.6rem;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
@@ -187,6 +24,14 @@
       <button class="btn-import" onclick="document.getElementById('importFile').click()"
         aria-label="Import wallet from JSON file"><span aria-hidden="true">&#8593;</span> Import from .json</button>
       <p class="error" id="import-error" role="alert" aria-live="assertive" aria-atomic="true"></p>
+    </div>
+
+    <div class="wallets-section" id="wallets-section" style="display:none" role="region" aria-label="Saved wallets">
+      <div class="wallets-header">
+        <span>Saved Wallets</span>
+        <span class="wallets-count" id="wallets-count" aria-live="polite"></span>
+      </div>
+      <ul class="wallets-list" id="wallets-list"></ul>
     </div>
 
     <p class="disclaimer">Note: PolygonPay is a non-custodial cryptocurrency wallet. <u>You are responsible for keeping
@@ -224,6 +69,8 @@
   </div>
 
   <script>
+    let db = null;
+
     function generate() {
       const btn = document.getElementById('btn');
       const errorEl = document.getElementById('error');
@@ -236,6 +83,7 @@
         document.getElementById('address').textContent = wallet.address;
         document.getElementById('privateKey').textContent = wallet.privateKey;
         document.getElementById('result').style.display = 'block';
+        saveWalletToDB(wallet.address, wallet.privateKey).then(() => renderWallets());
       } catch (e) {
         errorEl.textContent = 'Failed to generate keypair.';
         errorEl.style.display = 'block';
@@ -284,6 +132,9 @@
           document.getElementById('address').textContent = wallet.address;
           document.getElementById('privateKey').textContent = wallet.privateKey;
           document.getElementById('result').style.display = 'block';
+          walletExistsByAddress(wallet.address).then(exists => {
+            if (!exists) saveWalletToDB(wallet.address, wallet.privateKey).then(() => renderWallets());
+          });
         } catch (err) {
           importErrorEl.textContent = 'Import failed: ' + (err.message || 'Invalid wallet file.');
           importErrorEl.style.display = 'block';
@@ -296,6 +147,118 @@
       reader.readAsText(file);
     }
 
+    // ── IndexedDB wallet storage ────────────────────────────────────────
+    function initDB() {
+      return new Promise((resolve, reject) => {
+        const req = indexedDB.open('polygonpay', 1);
+        req.onupgradeneeded = function (e) {
+          const d = e.target.result;
+          if (!d.objectStoreNames.contains('wallets')) {
+            d.createObjectStore('wallets', { keyPath: 'id', autoIncrement: true });
+          }
+        };
+        req.onsuccess = function (e) { db = e.target.result; resolve(); };
+        req.onerror = function () { reject(req.error); };
+      });
+    }
+
+    function saveWalletToDB(address, privateKey) {
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction('wallets', 'readwrite');
+        const req = tx.objectStore('wallets').add({ address, privateKey, createdAt: new Date().toISOString() });
+        req.onsuccess = () => resolve();
+        req.onerror = () => reject(req.error);
+      });
+    }
+
+    function getAllWallets() {
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction('wallets', 'readonly');
+        const req = tx.objectStore('wallets').getAll();
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = () => reject(req.error);
+      });
+    }
+
+    function deleteWalletFromDB(id) {
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction('wallets', 'readwrite');
+        const req = tx.objectStore('wallets').delete(id);
+        req.onsuccess = () => resolve();
+        req.onerror = () => reject(req.error);
+      });
+    }
+
+    function walletExistsByAddress(address) {
+      return getAllWallets().then(wallets =>
+        wallets.some(w => w.address.toLowerCase() === address.toLowerCase())
+      );
+    }
+
+    function renderWallets() {
+      if (!db) return;
+      getAllWallets().then(wallets => {
+        const section = document.getElementById('wallets-section');
+        const list = document.getElementById('wallets-list');
+        const countEl = document.getElementById('wallets-count');
+        if (wallets.length === 0) { section.style.display = 'none'; return; }
+        section.style.display = 'block';
+        countEl.textContent = wallets.length + ' wallet' + (wallets.length !== 1 ? 's' : '');
+        list.innerHTML = '';
+        [...wallets].reverse().forEach(wallet => {
+          const li = document.createElement('li');
+          li.className = 'wallet-entry';
+          const short = wallet.address.slice(0, 10) + '\u2026' + wallet.address.slice(-8);
+          const dateStr = new Date(wallet.createdAt).toLocaleString();
+          const info = document.createElement('div');
+          info.className = 'wallet-entry-info';
+          const addrSpan = document.createElement('span');
+          addrSpan.className = 'wallet-entry-addr';
+          addrSpan.title = wallet.address;
+          addrSpan.textContent = short;
+          const dateSpan = document.createElement('span');
+          dateSpan.className = 'wallet-entry-date';
+          dateSpan.textContent = dateStr;
+          info.appendChild(addrSpan);
+          info.appendChild(dateSpan);
+          const actions = document.createElement('div');
+          actions.className = 'wallet-entry-actions';
+          const loadBtn = document.createElement('button');
+          loadBtn.className = 'btn-sm btn-load-wallet';
+          loadBtn.textContent = 'Load';
+          loadBtn.setAttribute('aria-label', 'Load wallet ' + wallet.address);
+          loadBtn.onclick = () => loadSavedWallet(wallet.id);
+          const delBtn = document.createElement('button');
+          delBtn.className = 'btn-sm btn-delete-wallet';
+          delBtn.textContent = 'Delete';
+          delBtn.setAttribute('aria-label', 'Delete wallet ' + wallet.address);
+          delBtn.onclick = () => deleteSavedWallet(wallet.id);
+          actions.appendChild(loadBtn);
+          actions.appendChild(delBtn);
+          li.appendChild(info);
+          li.appendChild(actions);
+          list.appendChild(li);
+        });
+      });
+    }
+
+    function loadSavedWallet(id) {
+      getAllWallets().then(wallets => {
+        const wallet = wallets.find(w => w.id === id);
+        if (!wallet) return;
+        document.getElementById('address').textContent = wallet.address;
+        document.getElementById('privateKey').textContent = wallet.privateKey;
+        document.getElementById('result').style.display = 'block';
+        document.getElementById('error').style.display = 'none';
+        document.getElementById('import-error').style.display = 'none';
+      });
+    }
+
+    function deleteSavedWallet(id) {
+      deleteWalletFromDB(id).then(() => renderWallets());
+    }
+    // ─────────────────────────────────────────────────────────────────────
+
     function copy(id) {
       const text = document.getElementById(id).textContent;
       navigator.clipboard.writeText(text).then(() => {
@@ -305,6 +268,8 @@
         setTimeout(() => el.textContent = orig, 1200);
       });
     }
+
+    initDB().then(() => renderWallets());
   </script>
 </body>
 
