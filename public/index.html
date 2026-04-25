@@ -12,7 +12,7 @@
 <body>
   <div class="card" role="main">
     <h1>PolygonPay Wallet</h1>
-    <p class="disclaimer">Note: PolygonPay is a non-custodial cryptocurrency wallet. <u>You are responsible for keeping your private key safe!</u> <a href="https://ethereum.org/en/wallets/" target="_blank" rel="noopener noreferrer" style="color:#4a9eff;cursor:help;" aria-label="Learn more about keeping your private key safe (opens in a new tab)">Learn more <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:middle;" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/><path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/></svg></a></p>
+    <p class="disclaimer">Note: PolygonPay is a non-custodial cryptocurrency wallet. <u>You are responsible for keeping your private key safe and secure!</u> <a href="https://ethereum.org/en/wallets/" target="_blank" rel="noopener noreferrer" style="color:#4a9eff;cursor:help;" aria-label="Learn more about keeping your private key safe (opens in a new tab)">Learn more <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:middle;" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/><path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/></svg></a></p>
 
     <button id="btn" onclick="generate()">Generate Wallet</button>
     <input type="file" id="importFile" accept=".json" style="display:none" onchange="handleImport(event)"
@@ -42,9 +42,6 @@
         <div class="value" id="privateKey" role="button" tabindex="0" onclick="copy('privateKey')" title="Click to copy"
           aria-labelledby="label-privatekey" aria-describedby="hint-privatekey"></div>
         <p class="copy-hint" id="hint-privatekey" aria-hidden="true">Click to copy</p>
-      </div>
-      <div class="warning">
-        <span aria-hidden="true">&#9888;</span> Never share your private key with anyone.
       </div>
       <button class="btn-download" onclick="downloadJson()" aria-label="Download wallet keypair as JSON file"><span
           aria-hidden="true">&#8595;</span> Download as .json</button>
