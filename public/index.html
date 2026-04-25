@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PolygonPay Wallet</title>
+  <script src="https://cdn.jsdelivr.net/npm/ethers@6.16.0/dist/ethers.umd.min.js" crossorigin="anonymous"></script>
   <style>
     * {
       box-sizing: border-box;
@@ -100,6 +101,8 @@
       font-family: monospace;
       font-size: 0.82rem;
       word-break: break-all;
+      overflow-wrap: break-word;
+      white-space: normal;
       color: #c9b8ff;
       cursor: pointer;
       position: relative;
@@ -149,7 +152,7 @@
 <body>
   <div class="card" role="main">
     <h1>PolygonPay Wallet</h1>
-    <p class="subtitle">Generate a new keypair using a cryptographically secure random source on the server.</p>
+    <p class="subtitle">Generate a new keypair entirely in your browser. Your private key never leaves your device.</p>
 
     <button id="btn" onclick="generate()">Generate Wallet</button>
     <p class="error" id="error" role="alert" aria-live="assertive" aria-atomic="true"></p>
@@ -181,15 +184,15 @@
         <p class="copy-hint" id="hint-privatekey" aria-hidden="true">Click to copy</p>
       </div>
       <div class="warning">
-        <span aria-hidden="true">&#9888;</span> Never share your private key. This page is for local use only.
+        <span aria-hidden="true">&#9888;</span> Never share your private key with anyone.
       </div>
-      <button class="btn-download" onclick="downloadTxt()" aria-label="Download wallet keypair as text file"><span
-          aria-hidden="true">&#8595;</span> Download as .txt</button>
+      <button class="btn-download" onclick="downloadJson()" aria-label="Download wallet keypair as JSON file"><span
+          aria-hidden="true">&#8595;</span> Download as .json</button>
     </div>
   </div>
 
   <script>
-    async function generate() {
+    function generate() {
       const btn = document.getElementById('btn');
       const errorEl = document.getElementById('error');
       btn.disabled = true;
@@ -197,15 +200,12 @@
       errorEl.style.display = 'none';
 
       try {
-        const res = await fetch('/generate');
-        if (!res.ok) throw new Error('Server error');
-        const data = await res.json();
-
-        document.getElementById('address').textContent = data.address;
-        document.getElementById('privateKey').textContent = data.privateKey;
+        const wallet = ethers.Wallet.createRandom();
+        document.getElementById('address').textContent = wallet.address;
+        document.getElementById('privateKey').textContent = wallet.privateKey;
         document.getElementById('result').style.display = 'block';
       } catch (e) {
-        errorEl.textContent = 'Failed to generate keypair. Is the server running?';
+        errorEl.textContent = 'Failed to generate keypair.';
         errorEl.style.display = 'block';
       } finally {
         btn.disabled = false;
@@ -213,14 +213,14 @@
       }
     }
 
-    function downloadTxt() {
+    function downloadJson() {
       const address = document.getElementById('address').textContent;
       const privateKey = document.getElementById('privateKey').textContent;
-      const content = `Ethereum Keypair\n${'='.repeat(40)}\nAddress (Public):\n${address}\n\nPrivate Key:\n${privateKey}\n\nWARNING: Never share your private key with anyone.\n`;
-      const blob = new Blob([content], { type: 'text/plain' });
+      const content = JSON.stringify({ address, privateKey, warning: 'Never share your private key with anyone.' }, null, 2);
+      const blob = new Blob([content], { type: 'application/json' });
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = 'ethereum-keypair.txt';
+      a.download = 'ethereum-keypair.json';
       a.click();
       URL.revokeObjectURL(a.href);
     }
