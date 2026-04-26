@@ -132,6 +132,17 @@
       </div>
       <button class="btn-download" onclick="downloadJson()" aria-label="Download wallet keypair as JSON file"><span
           aria-hidden="true">&#8595;</span> Download as .json</button>
+
+      <div class="balance-section">
+        <div class="network-switcher" role="group" aria-label="Select network">
+          <button class="btn-network active" id="btn-net-eth" onclick="switchNetwork('eth')" aria-pressed="true">Ethereum</button>
+          <button class="btn-network" id="btn-net-matic" onclick="switchNetwork('matic')" aria-pressed="false">Polygon</button>
+        </div>
+        <div class="balance-row">
+          <span class="balance-label">Balance</span>
+          <span class="balance-value" id="balance-value" aria-live="polite">—</span>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -176,6 +187,40 @@
   <script>
     let db = null;
 
+    // ── Network / balance ────────────────────────────────────────────────
+    const NETWORKS = {
+      eth:   { rpcs: ['https://ethereum.publicnode.com', 'https://eth.drpc.org'],     symbol: 'ETH',   label: 'Ethereum' },
+      matic: { rpcs: ['https://polygon.publicnode.com',  'https://polygon.drpc.org'], symbol: 'MATIC', label: 'Polygon'  },
+    };
+    let currentNetwork = 'eth';
+
+    function switchNetwork(key) {
+      currentNetwork = key;
+      document.getElementById('btn-net-eth').classList.toggle('active', key === 'eth');
+      document.getElementById('btn-net-eth').setAttribute('aria-pressed', key === 'eth');
+      document.getElementById('btn-net-matic').classList.toggle('active', key === 'matic');
+      document.getElementById('btn-net-matic').setAttribute('aria-pressed', key === 'matic');
+      const address = document.getElementById('address').textContent.trim();
+      if (address) fetchBalance(address);
+    }
+
+    async function fetchBalance(address) {
+      const balEl = document.getElementById('balance-value');
+      balEl.textContent = 'Loading…';
+      const net = NETWORKS[currentNetwork];
+      for (const rpc of net.rpcs) {
+        try {
+          const provider = new ethers.JsonRpcProvider(rpc);
+          const raw = await provider.getBalance(address);
+          const formatted = parseFloat(ethers.formatEther(raw)).toFixed(6);
+          balEl.textContent = formatted + ' ' + net.symbol;
+          return;
+        } catch { /* try next */ }
+      }
+      balEl.textContent = 'Unable to fetch';
+    }
+    // ─────────────────────────────────────────────────────────────────────
+
     function generate() {
       const btn = document.getElementById('btn');
       const errorEl = document.getElementById('error');
@@ -188,6 +233,7 @@
         document.getElementById('address').textContent = wallet.address;
         document.getElementById('privateKey').textContent = wallet.privateKey;
         document.getElementById('result').style.display = 'block';
+        fetchBalance(wallet.address);
         saveWalletToDB(wallet.address, wallet.privateKey).then(() => renderWallets());
       } catch (e) {
         errorEl.textContent = 'Failed to generate keypair.';
@@ -242,6 +288,7 @@
           document.getElementById('address').textContent = wallet.address;
           document.getElementById('privateKey').textContent = wallet.privateKey;
           document.getElementById('result').style.display = 'block';
+          fetchBalance(wallet.address);
           walletExistsByAddress(wallet.address).then(exists => {
             if (!exists) saveWalletToDB(wallet.address, wallet.privateKey).then(() => renderWallets());
           });
@@ -361,6 +408,7 @@
         document.getElementById('result').style.display = 'block';
         document.getElementById('error').style.display = 'none';
         document.getElementById('import-error').style.display = 'none';
+        fetchBalance(wallet.address);
       });
     }
 

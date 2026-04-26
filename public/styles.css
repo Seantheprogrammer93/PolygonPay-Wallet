@@ -355,3 +355,64 @@
     .footer-links a:hover {
         color: #c9b8ff;
     }
+
+    .balance-section {
+        margin-top: 1.25rem;
+        border-top: 1px solid #2a2a2a;
+        padding-top: 1rem;
+    }
+
+    .network-switcher {
+        display: flex;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid #2a2a2a;
+        margin-bottom: 0.85rem;
+    }
+
+    .btn-network {
+        flex: 1;
+        width: auto;
+        padding: 0.45rem 0;
+        border-radius: 0;
+        border: none;
+        background: #111;
+        color: #888;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: background 0.15s, color 0.15s;
+    }
+
+    .btn-network + .btn-network {
+        border-left: 1px solid #2a2a2a;
+    }
+
+    .btn-network.active {
+        background: #7b3fe4;
+        color: #fff;
+    }
+
+    .btn-network:hover:not(.active) {
+        background: #1e1e1e;
+        color: #ccc;
+    }
+
+    .balance-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.82rem;
+    }
+
+    .balance-label {
+        color: #888;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        font-size: 0.75rem;
+    }
+
+    .balance-value {
+        font-family: monospace;
+        color: #4caf87;
+        font-size: 0.9rem;
+    }
