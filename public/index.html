@@ -293,7 +293,15 @@
       const url = new URL('https://buy.moonpay.com/');
       url.searchParams.set('currencyCode', currencyCode);
       if (address) url.searchParams.set('walletAddress', address);
-      window.open(url.toString(), '_blank', 'noopener,noreferrer');
+      // Popup window settings
+      const w = 480, h = 700;
+      const left = window.screenX + (window.outerWidth - w) / 2;
+      const top = window.screenY + (window.outerHeight - h) / 2;
+      window.open(
+        url.toString(),
+        'moonpay_popup',
+        `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes,status=no,toolbar=no,menubar=no`
+      );
     }
     // ─────────────────────────────────────────────────────────────────────
 
