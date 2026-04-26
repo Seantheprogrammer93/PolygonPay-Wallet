@@ -146,6 +146,20 @@
           <span class="balance-value" id="balance-value" aria-live="polite">—</span>
         </div>
       </div>
+
+      <div class="send-section">
+        <div class="send-heading">Send</div>
+        <div class="field">
+          <label for="send-to">Recipient Address</label>
+          <input type="text" id="send-to" class="send-input" placeholder="0x…" autocomplete="off" spellcheck="false" />
+        </div>
+        <div class="field">
+          <label for="send-amount">Amount (<span id="send-symbol">ETH</span>)</label>
+          <input type="number" id="send-amount" class="send-input" placeholder="0.0" min="0" step="any" />
+        </div>
+        <button class="btn-send" onclick="sendCrypto()" id="btn-send">Send</button>
+        <p class="send-status" id="send-status" role="status" aria-live="polite"></p>
+      </div>
     </div>
   </div>
 
@@ -192,8 +206,8 @@
 
     // ── Network / balance ────────────────────────────────────────────────
     const NETWORKS = {
-      eth:   { rpcs: ['https://ethereum.publicnode.com', 'https://eth.drpc.org'],     symbol: 'ETH',   label: 'Ethereum' },
-      matic: { rpcs: ['https://polygon.publicnode.com',  'https://polygon.drpc.org'], symbol: 'MATIC', label: 'Polygon'  },
+      eth:   { rpcs: ['https://ethereum.publicnode.com', 'https://eth.drpc.org'],     symbol: 'ETH',   label: 'Ethereum', explorer: 'https://etherscan.io'    },
+      matic: { rpcs: ['https://polygon.publicnode.com',  'https://polygon.drpc.org'], symbol: 'MATIC', label: 'Polygon',  explorer: 'https://polygonscan.com' },
     };
     let currentNetwork = 'eth';
 
@@ -203,6 +217,7 @@
       document.getElementById('btn-net-eth').setAttribute('aria-pressed', key === 'eth');
       document.getElementById('btn-net-matic').classList.toggle('active', key === 'matic');
       document.getElementById('btn-net-matic').setAttribute('aria-pressed', key === 'matic');
+      document.getElementById('send-symbol').textContent = NETWORKS[key].symbol;
       const address = document.getElementById('address').textContent.trim();
       if (address) fetchBalance(address);
     }
@@ -221,6 +236,68 @@
         } catch { /* try next */ }
       }
       balEl.textContent = 'Unable to fetch';
+    }
+    // ─────────────────────────────────────────────────────────────────────
+
+    // ── Send ─────────────────────────────────────────────────────────────
+    async function sendCrypto() {
+      const toAddr   = document.getElementById('send-to').value.trim();
+      const amountIn = document.getElementById('send-amount').value.trim();
+      const statusEl = document.getElementById('send-status');
+      const sendBtn  = document.getElementById('btn-send');
+      const privateKey = document.getElementById('privateKey').textContent.trim();
+
+      statusEl.className = 'send-status';
+      statusEl.textContent = '';
+
+      if (!ethers.isAddress(toAddr)) {
+        statusEl.textContent = 'Invalid recipient address.';
+        statusEl.classList.add('send-status--error');
+        return;
+      }
+      if (!amountIn || isNaN(amountIn) || parseFloat(amountIn) <= 0) {
+        statusEl.textContent = 'Enter a valid amount.';
+        statusEl.classList.add('send-status--error');
+        return;
+      }
+
+      const net = NETWORKS[currentNetwork];
+      const confirmed = confirm(
+        `Send ${amountIn} ${net.symbol} to\n${toAddr}\n\nThis transaction cannot be reversed. Proceed?`
+      );
+      if (!confirmed) return;
+
+      sendBtn.disabled = true;
+      sendBtn.textContent = 'Sending…';
+      statusEl.textContent = '';
+
+      let lastErr;
+      for (const rpc of net.rpcs) {
+        try {
+          const provider = new ethers.JsonRpcProvider(rpc);
+          const wallet   = new ethers.Wallet(privateKey, provider);
+          const tx = await wallet.sendTransaction({
+            to:    toAddr,
+            value: ethers.parseEther(amountIn),
+          });
+          statusEl.innerHTML =
+            `Sent! Tx: <a href="${net.explorer}/tx/${tx.hash}" target="_blank" rel="noopener noreferrer"
+              style="color:#4a9eff;word-break:break-all">${tx.hash}</a>`;
+          statusEl.classList.add('send-status--ok');
+          document.getElementById('send-to').value = '';
+          document.getElementById('send-amount').value = '';
+          fetchBalance(document.getElementById('address').textContent.trim());
+          sendBtn.disabled = false;
+          sendBtn.textContent = 'Send';
+          return;
+        } catch (e) {
+          lastErr = e;
+        }
+      }
+      statusEl.textContent = 'Transaction failed: ' + (lastErr?.reason || lastErr?.message || 'Unknown error');
+      statusEl.classList.add('send-status--error');
+      sendBtn.disabled = false;
+      sendBtn.textContent = 'Send';
     }
     // ─────────────────────────────────────────────────────────────────────
 
