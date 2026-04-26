@@ -110,6 +110,7 @@
       <button class="btn-download" onclick="downloadJson()" id="btn-export" style="display:none"
         aria-label="Download wallet keypair as JSON file">&#8595; Export Wallet</button>
     </div>
+    <button class="btn-buy" onclick="openBuyCrypto()" aria-label="Buy crypto via MoonPay">&#43; Buy Crypto</button>
     <p class="error" id="error" role="alert" aria-live="assertive" aria-atomic="true"></p>
     <p class="error" id="import-error" role="alert" aria-live="assertive" aria-atomic="true"></p>
 
@@ -281,6 +282,18 @@
         } catch { /* try next */ }
       }
       balEl.textContent = 'Unable to fetch';
+    }
+    // ─────────────────────────────────────────────────────────────────────
+
+    // ── Buy Crypto ───────────────────────────────────────────────────────
+    function openBuyCrypto() {
+      const address = document.getElementById('address').textContent.trim();
+      const net = NETWORKS[currentNetwork];
+      const currencyCode = currentToken === 'usdc' ? 'usdc' : net.symbol.toLowerCase();
+      const url = new URL('https://buy.moonpay.com/');
+      url.searchParams.set('currencyCode', currencyCode);
+      if (address) url.searchParams.set('walletAddress', address);
+      window.open(url.toString(), '_blank', 'noopener,noreferrer');
     }
     // ─────────────────────────────────────────────────────────────────────
 

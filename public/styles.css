@@ -503,6 +503,17 @@
         background: #6530c2;
     }
 
+    .btn-buy {
+        margin-top: 0.6rem;
+        background: #1a3520;
+        border: 1px solid #2e6b3a;
+        color: #4cdf80;
+    }
+
+    .btn-buy:hover {
+        background: #1e4528;
+    }
+
     .send-status {
         margin-top: 0.6rem;
         font-size: 0.8rem;
