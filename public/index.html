@@ -104,8 +104,12 @@
     <button id="btn" onclick="generate()">Generate Wallet</button>
     <input type="file" id="importFile" accept=".json" style="display:none" onchange="handleImport(event)"
       aria-label="Select a wallet JSON file to import" />
-    <button class="btn-import" onclick="document.getElementById('importFile').click()" style="margin-top:0.6rem;"
-      aria-label="Import wallet from JSON file"><span aria-hidden="true"></span>Import Wallet from .json</button>
+    <div class="btn-row">
+      <button class="btn-import" onclick="document.getElementById('importFile').click()"
+        aria-label="Import wallet from JSON file">&#8593; Import Wallet</button>
+      <button class="btn-download" onclick="downloadJson()" id="btn-export" style="display:none"
+        aria-label="Download wallet keypair as JSON file">&#8595; Export Wallet</button>
+    </div>
     <p class="error" id="error" role="alert" aria-live="assertive" aria-atomic="true"></p>
     <p class="error" id="import-error" role="alert" aria-live="assertive" aria-atomic="true"></p>
 
@@ -130,8 +134,7 @@
           aria-labelledby="label-privatekey" aria-describedby="hint-privatekey"></div>
         <p class="copy-hint" id="hint-privatekey" aria-hidden="true">Click to copy</p>
       </div>
-      <button class="btn-download" onclick="downloadJson()" aria-label="Download wallet keypair as JSON file"><span
-          aria-hidden="true">&#8595;</span> Download as .json</button>
+      <button class="btn-download" onclick="downloadJson()" aria-label="Download wallet keypair as JSON file" style="display:none" id="btn-export-result"><!-- moved --></button>
 
       <div class="balance-section">
         <div class="network-switcher" role="group" aria-label="Select network">
@@ -233,6 +236,7 @@
         document.getElementById('address').textContent = wallet.address;
         document.getElementById('privateKey').textContent = wallet.privateKey;
         document.getElementById('result').style.display = 'block';
+        document.getElementById('btn-export').style.display = 'block';
         fetchBalance(wallet.address);
         saveWalletToDB(wallet.address, wallet.privateKey).then(() => renderWallets());
       } catch (e) {
@@ -288,6 +292,7 @@
           document.getElementById('address').textContent = wallet.address;
           document.getElementById('privateKey').textContent = wallet.privateKey;
           document.getElementById('result').style.display = 'block';
+          document.getElementById('btn-export').style.display = 'block';
           fetchBalance(wallet.address);
           walletExistsByAddress(wallet.address).then(exists => {
             if (!exists) saveWalletToDB(wallet.address, wallet.privateKey).then(() => renderWallets());
@@ -406,6 +411,7 @@
         document.getElementById('address').textContent = wallet.address;
         document.getElementById('privateKey').textContent = wallet.privateKey;
         document.getElementById('result').style.display = 'block';
+        document.getElementById('btn-export').style.display = 'block';
         document.getElementById('error').style.display = 'none';
         document.getElementById('import-error').style.display = 'none';
         fetchBalance(wallet.address);

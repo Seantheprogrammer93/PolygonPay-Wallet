@@ -130,7 +130,6 @@
     }
 
     .btn-download {
-        margin-top: 1rem;
         background: #1e3a2f;
         border: 1px solid #2e6b4f;
         color: #4caf87;
@@ -141,7 +140,6 @@
     }
 
     .btn-import {
-        margin-top: 0.75rem;
         background: #1a2a3a;
         border: 1px solid #2e5080;
         color: #5aabf0;
@@ -149,6 +147,17 @@
 
     .btn-import:hover {
         background: #1a3550;
+    }
+
+    .btn-row {
+        display: flex;
+        gap: 0.6rem;
+        margin-top: 0.6rem;
+    }
+
+    .btn-row button {
+        flex: 1;
+        width: auto;
     }
 
     .import-section {
