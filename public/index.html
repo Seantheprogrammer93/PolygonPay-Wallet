@@ -5,94 +5,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Primary SEO -->
-  <title>PolygonPay — Free Non-Custodial Ethereum &amp; Polygon Wallet Generator</title>
-  <meta name="description"
-    content="Instantly generate a secure Ethereum and Polygon wallet in your browser. PolygonPay is 100% non-custodial — your private key is never sent to any server." />
+
+  <title>PolygonPay — Free Non-Custodial Wallet Generator</title>
+  <meta name="description" content="Generate a secure Ethereum and Polygon wallet instantly. 100% non-custodial. Your private key never leaves your device." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://polygonpay.com/" />
-
-  <!-- Open Graph -->
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://polygonpay.com/" />
-  <meta property="og:site_name" content="PolygonPay" />
-  <meta property="og:title" content="PolygonPay — Free Non-Custodial Ethereum &amp; Polygon Wallet Generator" />
-  <meta property="og:description"
-    content="Instantly generate a secure Ethereum and Polygon wallet in your browser. 100% non-custodial — your private key never leaves your device." />
-
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="PolygonPay — Free Non-Custodial Ethereum &amp; Polygon Wallet Generator" />
-  <meta name="twitter:description"
-    content="Instantly generate a secure Ethereum and Polygon wallet in your browser. 100% non-custodial — your private key never leaves your device." />
-
-  <!-- JSON-LD: WebApplication + FAQPage -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "WebApplication",
-        "name": "PolygonPay",
-        "url": "https://polygonpay.com/",
-        "description": "Free non-custodial Ethereum and Polygon wallet generator. Private keys are generated in-browser and never transmitted to any server.",
-        "applicationCategory": "FinanceApplication",
-        "operatingSystem": "Any",
-        "browserRequirements": "Requires JavaScript",
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD"
-        }
-      },
-      {
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "What is a non-custodial wallet?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "A non-custodial wallet means only you hold your private key — no company, server, or third party stores or has access to it. You have full control over your funds, and full responsibility for keeping your key safe."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What is a private key?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "A private key is a secret 256-bit number that proves ownership of your wallet. Anyone who knows your private key can spend all the funds in that wallet. Never share it, screenshot it, or store it in cloud services like Google Drive or iCloud."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Does PolygonPay ever see my private key?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "No. Key generation happens entirely inside your browser using the Web Crypto API. Your private key is never sent to any server. You can verify this by running PolygonPay offline — it will still generate valid keypairs."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Can I use this wallet with MetaMask or other wallets?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes. The generated private key is a standard Ethereum-compatible key. You can import it into MetaMask, Trust Wallet, Ledger Live, or any other wallet that supports private key import."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What happens if I lose my private key?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Your funds will be permanently inaccessible. There is no password reset, no support team, and no way to recover a lost private key. Store it in at least two secure offline locations — such as a hardware wallet, encrypted USB drive, or written on paper stored safely."
-            }
-          }
-        ]
-      }
-    ]
-  }
-  </script>
 
   <script src="https://cdn.jsdelivr.net/npm/ethers@6.16.0/dist/ethers.umd.min.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="styles.css" />
@@ -490,40 +407,44 @@
         countEl.textContent = wallets.length + ' wallet' + (wallets.length !== 1 ? 's' : '');
         list.innerHTML = '';
         [...wallets].reverse().forEach(wallet => {
-          const li = document.createElement('li');
-          li.className = 'wallet-entry';
-          const short = wallet.address.slice(0, 10) + '\u2026' + wallet.address.slice(-8);
-          const dateStr = new Date(wallet.createdAt).toLocaleString();
-          const info = document.createElement('div');
-          info.className = 'wallet-entry-info';
-          const addrSpan = document.createElement('span');
-          addrSpan.className = 'wallet-entry-addr';
-          addrSpan.title = wallet.address;
-          addrSpan.textContent = short;
-          const dateSpan = document.createElement('span');
-          dateSpan.className = 'wallet-entry-date';
-          dateSpan.textContent = dateStr;
-          info.appendChild(addrSpan);
-          info.appendChild(dateSpan);
-          const actions = document.createElement('div');
-          actions.className = 'wallet-entry-actions';
-          const loadBtn = document.createElement('button');
-          loadBtn.className = 'btn-sm btn-load-wallet';
-          loadBtn.textContent = 'Load';
-          loadBtn.setAttribute('aria-label', 'Load wallet ' + wallet.address);
-          loadBtn.onclick = () => loadSavedWallet(wallet.id);
-          const delBtn = document.createElement('button');
-          delBtn.className = 'btn-sm btn-delete-wallet';
-          delBtn.textContent = 'Delete';
-          delBtn.setAttribute('aria-label', 'Delete wallet ' + wallet.address);
-          delBtn.onclick = () => confirmDeleteWallet(wallet.id, wallet.address);
-          actions.appendChild(loadBtn);
-          actions.appendChild(delBtn);
-          li.appendChild(info);
-          li.appendChild(actions);
-          list.appendChild(li);
+          list.appendChild(createWalletListItem(wallet));
         });
       });
+    }
+
+    function createWalletListItem(wallet) {
+      const li = document.createElement('li');
+      li.className = 'wallet-entry';
+      const short = wallet.address.slice(0, 10) + '\u2026' + wallet.address.slice(-8);
+      const dateStr = new Date(wallet.createdAt).toLocaleString();
+      const info = document.createElement('div');
+      info.className = 'wallet-entry-info';
+      const addrSpan = document.createElement('span');
+      addrSpan.className = 'wallet-entry-addr';
+      addrSpan.title = wallet.address;
+      addrSpan.textContent = short;
+      const dateSpan = document.createElement('span');
+      dateSpan.className = 'wallet-entry-date';
+      dateSpan.textContent = dateStr;
+      info.appendChild(addrSpan);
+      info.appendChild(dateSpan);
+      const actions = document.createElement('div');
+      actions.className = 'wallet-entry-actions';
+      const loadBtn = document.createElement('button');
+      loadBtn.className = 'btn-sm btn-load-wallet';
+      loadBtn.textContent = 'Load';
+      loadBtn.setAttribute('aria-label', 'Load wallet ' + wallet.address);
+      loadBtn.onclick = () => loadSavedWallet(wallet.id);
+      const delBtn = document.createElement('button');
+      delBtn.className = 'btn-sm btn-delete-wallet';
+      delBtn.textContent = 'Delete';
+      delBtn.setAttribute('aria-label', 'Delete wallet ' + wallet.address);
+      delBtn.onclick = () => confirmDeleteWallet(wallet.id, wallet.address);
+      actions.appendChild(loadBtn);
+      actions.appendChild(delBtn);
+      li.appendChild(info);
+      li.appendChild(actions);
+      return li;
     }
 
     function loadSavedWallet(id) {
@@ -576,14 +497,7 @@ function showDeleteModal(id, address) {
   box.style.textAlign = 'center';
   box.style.border = '1px solid #7a4800';
 
-  const msg = document.createElement('div');
-  msg.style.marginBottom = '1.35rem';
-  msg.style.fontSize = '1.01rem';
-  msg.style.color = '#f0a040';
-  msg.style.lineHeight = '1.6';
-  const shortAddr = address.slice(0, 10) + '\u2026' + address.slice(-8);
-  msg.innerHTML = `Are you sure you want to <b style='color:#e04a3f'>delete</b> the selected wallet address?<br><span style='font-family:monospace;font-size:0.93em;color:#fff;background:#3a2a00;padding:0.13em 0.5em;border-radius:5px;margin-top:0.5em;display:inline-block'>${shortAddr}</span>`;
-  box.appendChild(msg);
+  box.appendChild(createDeleteModalMsg(address));
 
   const btnRow = document.createElement('div');
   btnRow.style.display = 'flex';
@@ -617,6 +531,17 @@ function showDeleteModal(id, address) {
   box.appendChild(btnRow);
   modal.appendChild(box);
   document.body.appendChild(modal);
+}
+
+function createDeleteModalMsg(address) {
+  const msg = document.createElement('div');
+  msg.style.marginBottom = '1.35rem';
+  msg.style.fontSize = '1.01rem';
+  msg.style.color = '#f0a040';
+  msg.style.lineHeight = '1.6';
+  const shortAddr = address.slice(0, 10) + '\u2026' + address.slice(-8);
+  msg.innerHTML = `Are you sure you want to <b style='color:#e04a3f'>delete</b> the selected wallet address?<br><span style='font-family:monospace;font-size:0.93em;color:#fff;background:#3a2a00;padding:0.13em 0.5em;border-radius:5px;margin-top:0.5em;display:inline-block'>${shortAddr}</span>`;
+  return msg;
 }
     // ─────────────────────────────────────────────────────────────────────
 
