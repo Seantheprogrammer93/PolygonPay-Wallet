@@ -217,7 +217,8 @@
     let currentToken = null; // null = native asset; 'usdc' = USDC ERC-20
 
     const TOKENS = {
-      usdc: { address: '0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359', decimals: 6, symbol: 'USDC' },
+      eth:   { usdc: { address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', decimals: 6, symbol: 'USDC' } },
+      matic: { usdc: { address: '0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359', decimals: 6, symbol: 'USDC' } },
     };
     const ERC20_ABI = [
       'function balanceOf(address owner) view returns (uint256)',
@@ -232,7 +233,9 @@
       document.getElementById('btn-net-matic').classList.toggle('active', key === 'matic');
       document.getElementById('btn-net-matic').setAttribute('aria-pressed', key === 'matic');
       const tokSwitcher = document.getElementById('token-switcher');
-      tokSwitcher.style.display = key === 'matic' ? 'flex' : 'none';
+      tokSwitcher.style.display = 'flex';
+      const nativeLabel = NETWORKS[key].symbol;
+      document.getElementById('btn-tok-native').textContent = nativeLabel;
       document.getElementById('btn-tok-native').classList.add('active');
       document.getElementById('btn-tok-native').setAttribute('aria-pressed', 'true');
       document.getElementById('btn-tok-usdc').classList.remove('active');
@@ -249,7 +252,7 @@
       document.getElementById('btn-tok-native').setAttribute('aria-pressed', String(!token));
       document.getElementById('btn-tok-usdc').classList.toggle('active', token === 'usdc');
       document.getElementById('btn-tok-usdc').setAttribute('aria-pressed', String(token === 'usdc'));
-      document.getElementById('send-symbol').textContent = token ? TOKENS[token].symbol : net.symbol;
+      document.getElementById('send-symbol').textContent = token ? TOKENS[currentNetwork][token].symbol : net.symbol;
       const address = document.getElementById('address').textContent.trim();
       if (address) fetchBalance(address);
     }
@@ -262,8 +265,8 @@
         try {
           const provider = new ethers.JsonRpcProvider(rpc);
           let formatted, symbol;
-          if (currentToken && TOKENS[currentToken]) {
-            const tok = TOKENS[currentToken];
+          if (currentToken && TOKENS[currentNetwork]?.[currentToken]) {
+            const tok = TOKENS[currentNetwork][currentToken];
             const contract = new ethers.Contract(tok.address, ERC20_ABI, provider);
             const raw = await contract.balanceOf(address);
             formatted = parseFloat(ethers.formatUnits(raw, tok.decimals)).toFixed(6);
@@ -304,7 +307,7 @@
       }
 
       const net = NETWORKS[currentNetwork];
-      const sendSymbol = currentToken ? TOKENS[currentToken].symbol : net.symbol;
+      const sendSymbol = currentToken ? TOKENS[currentNetwork][currentToken].symbol : net.symbol;
       const confirmed = confirm(
         `Send ${amountIn} ${sendSymbol} to\n${toAddr}\n\nThis transaction cannot be reversed. Proceed?`
       );
@@ -320,8 +323,8 @@
           const provider = new ethers.JsonRpcProvider(rpc);
           const signer   = new ethers.Wallet(privateKey, provider);
           let tx;
-          if (currentToken && TOKENS[currentToken]) {
-            const tok = TOKENS[currentToken];
+          if (currentToken && TOKENS[currentNetwork]?.[currentToken]) {
+            const tok = TOKENS[currentNetwork][currentToken];
             const contract = new ethers.Contract(tok.address, ERC20_ABI, signer);
             tx = await contract.transfer(toAddr, ethers.parseUnits(amountIn, tok.decimals));
           } else {
