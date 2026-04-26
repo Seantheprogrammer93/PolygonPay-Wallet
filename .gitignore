@@ -1,0 +1,6 @@
+# Secret environment variables — never commit this
+.env
+
+# Go build output
+polygonpay
+polygonpay.exe

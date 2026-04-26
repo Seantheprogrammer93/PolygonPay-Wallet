@@ -1,12 +1,84 @@
 package main
 
 import (
+	"bufio"
+	"bytes"
 	"compress/gzip"
+	"io"
 	"log"
 	"net/http"
 	"os"
 	"strings"
 )
+
+// loadEnv reads a .env file and sets variables into the process environment.
+// Lines starting with # and blank lines are ignored.
+// Already-set environment variables are not overwritten.
+func loadEnv(path string) {
+	f, err := os.Open(path)
+	if err != nil {
+		return // .env is optional
+	}
+	defer f.Close()
+
+	scanner := bufio.NewScanner(f)
+	for scanner.Scan() {
+		line := strings.TrimSpace(scanner.Text())
+		if line == "" || strings.HasPrefix(line, "#") {
+			continue
+		}
+		key, value, found := strings.Cut(line, "=")
+		if !found {
+			continue
+		}
+		key = strings.TrimSpace(key)
+		value = strings.TrimSpace(value)
+		// Strip optional surrounding quotes
+		if len(value) >= 2 && value[0] == '"' && value[len(value)-1] == '"' {
+			value = value[1 : len(value)-1]
+		}
+		// Don't overwrite variables already set in the real environment
+		if os.Getenv(key) == "" {
+			os.Setenv(key, value)
+		}
+	}
+}
+
+// rpcProxy forwards a JSON-RPC POST body to targetURL and streams the response
+// back to the client. The API key stays on the server — the browser only ever
+// calls /rpc/eth or /rpc/matic.
+func rpcProxy(targetURL string) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodPost {
+			http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
+			return
+		}
+
+		body, err := io.ReadAll(io.LimitReader(r.Body, 1<<16)) // 64 KB max
+		if err != nil {
+			http.Error(w, "bad request", http.StatusBadRequest)
+			return
+		}
+
+		req, err := http.NewRequestWithContext(r.Context(), http.MethodPost, targetURL, bytes.NewReader(body))
+		if err != nil {
+			http.Error(w, "internal error", http.StatusInternalServerError)
+			return
+		}
+		req.Header.Set("Content-Type", "application/json")
+
+		resp, err := http.DefaultClient.Do(req)
+		if err != nil {
+			http.Error(w, "upstream error", http.StatusBadGateway)
+			return
+		}
+		defer resp.Body.Close()
+
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(resp.StatusCode)
+		_, _ = io.Copy(w, resp.Body)
+	}
+}
 
 // gzipResponseWriter wraps http.ResponseWriter to compress response bodies.
 type gzipResponseWriter struct {
@@ -66,7 +138,20 @@ func headersMiddleware(next http.Handler) http.Handler {
 }
 
 func main() {
+	loadEnv(".env")
+
 	mux := http.NewServeMux()
+
+	// RPC proxy routes — only registered when an API URL is configured.
+	// The browser calls /rpc/eth or /rpc/matic; the key never leaves the server.
+	if url := os.Getenv("RPC_ETH_URL"); url != "" {
+		mux.HandleFunc("/rpc/eth", rpcProxy(url))
+		log.Println("Ethereum RPC proxy active")
+	}
+	if url := os.Getenv("RPC_MATIC_URL"); url != "" {
+		mux.HandleFunc("/rpc/matic", rpcProxy(url))
+		log.Println("Polygon RPC proxy active")
+	}
 
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if r.URL.Path != "/" {

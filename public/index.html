@@ -206,8 +206,8 @@
 
     // ── Network / balance ────────────────────────────────────────────────
     const NETWORKS = {
-      eth:   { rpcs: ['https://ethereum.publicnode.com', 'https://eth.drpc.org'],     symbol: 'ETH',   label: 'Ethereum', explorer: 'https://etherscan.io'    },
-      matic: { rpcs: ['https://polygon.publicnode.com',  'https://polygon.drpc.org'], symbol: 'MATIC', label: 'Polygon',  explorer: 'https://polygonscan.com' },
+      eth:   { rpcs: ['/rpc/eth', 'https://ethereum.publicnode.com', 'https://eth.drpc.org'],     symbol: 'ETH',   label: 'Ethereum', explorer: 'https://etherscan.io'    },
+      matic: { rpcs: ['/rpc/matic', 'https://polygon.publicnode.com',  'https://polygon.drpc.org'], symbol: 'MATIC', label: 'Polygon',  explorer: 'https://polygonscan.com' },
     };
     let currentNetwork = 'eth';
 
