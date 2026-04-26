@@ -141,6 +141,10 @@
           <button class="btn-network active" id="btn-net-eth" onclick="switchNetwork('eth')" aria-pressed="true">Ethereum</button>
           <button class="btn-network" id="btn-net-matic" onclick="switchNetwork('matic')" aria-pressed="false">Polygon</button>
         </div>
+        <div class="token-switcher" id="token-switcher" style="display:none" role="group" aria-label="Select token">
+          <button class="btn-token active" id="btn-tok-native" onclick="switchToken(null)" aria-pressed="true">MATIC</button>
+          <button class="btn-token" id="btn-tok-usdc" onclick="switchToken('usdc')" aria-pressed="false">USDC</button>
+        </div>
         <div class="balance-row">
           <span class="balance-label">Balance</span>
           <span class="balance-value" id="balance-value" aria-live="polite">—</span>
@@ -210,14 +214,42 @@
       matic: { rpcs: ['/rpc/matic', 'https://polygon.publicnode.com',  'https://polygon.drpc.org'], symbol: 'MATIC', label: 'Polygon',  explorer: 'https://polygonscan.com' },
     };
     let currentNetwork = 'eth';
+    let currentToken = null; // null = native asset; 'usdc' = USDC ERC-20
+
+    const TOKENS = {
+      usdc: { address: '0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359', decimals: 6, symbol: 'USDC' },
+    };
+    const ERC20_ABI = [
+      'function balanceOf(address owner) view returns (uint256)',
+      'function transfer(address to, uint256 amount) returns (bool)',
+    ];
 
     function switchNetwork(key) {
       currentNetwork = key;
+      currentToken = null;
       document.getElementById('btn-net-eth').classList.toggle('active', key === 'eth');
       document.getElementById('btn-net-eth').setAttribute('aria-pressed', key === 'eth');
       document.getElementById('btn-net-matic').classList.toggle('active', key === 'matic');
       document.getElementById('btn-net-matic').setAttribute('aria-pressed', key === 'matic');
+      const tokSwitcher = document.getElementById('token-switcher');
+      tokSwitcher.style.display = key === 'matic' ? 'flex' : 'none';
+      document.getElementById('btn-tok-native').classList.add('active');
+      document.getElementById('btn-tok-native').setAttribute('aria-pressed', 'true');
+      document.getElementById('btn-tok-usdc').classList.remove('active');
+      document.getElementById('btn-tok-usdc').setAttribute('aria-pressed', 'false');
       document.getElementById('send-symbol').textContent = NETWORKS[key].symbol;
+      const address = document.getElementById('address').textContent.trim();
+      if (address) fetchBalance(address);
+    }
+
+    function switchToken(token) {
+      currentToken = token;
+      const net = NETWORKS[currentNetwork];
+      document.getElementById('btn-tok-native').classList.toggle('active', !token);
+      document.getElementById('btn-tok-native').setAttribute('aria-pressed', String(!token));
+      document.getElementById('btn-tok-usdc').classList.toggle('active', token === 'usdc');
+      document.getElementById('btn-tok-usdc').setAttribute('aria-pressed', String(token === 'usdc'));
+      document.getElementById('send-symbol').textContent = token ? TOKENS[token].symbol : net.symbol;
       const address = document.getElementById('address').textContent.trim();
       if (address) fetchBalance(address);
     }
@@ -229,9 +261,19 @@
       for (const rpc of net.rpcs) {
         try {
           const provider = new ethers.JsonRpcProvider(rpc);
-          const raw = await provider.getBalance(address);
-          const formatted = parseFloat(ethers.formatEther(raw)).toFixed(6);
-          balEl.textContent = formatted + ' ' + net.symbol;
+          let formatted, symbol;
+          if (currentToken && TOKENS[currentToken]) {
+            const tok = TOKENS[currentToken];
+            const contract = new ethers.Contract(tok.address, ERC20_ABI, provider);
+            const raw = await contract.balanceOf(address);
+            formatted = parseFloat(ethers.formatUnits(raw, tok.decimals)).toFixed(6);
+            symbol = tok.symbol;
+          } else {
+            const raw = await provider.getBalance(address);
+            formatted = parseFloat(ethers.formatEther(raw)).toFixed(6);
+            symbol = net.symbol;
+          }
+          balEl.textContent = formatted + ' ' + symbol;
           return;
         } catch { /* try next */ }
       }
@@ -262,8 +304,9 @@
       }
 
       const net = NETWORKS[currentNetwork];
+      const sendSymbol = currentToken ? TOKENS[currentToken].symbol : net.symbol;
       const confirmed = confirm(
-        `Send ${amountIn} ${net.symbol} to\n${toAddr}\n\nThis transaction cannot be reversed. Proceed?`
+        `Send ${amountIn} ${sendSymbol} to\n${toAddr}\n\nThis transaction cannot be reversed. Proceed?`
       );
       if (!confirmed) return;
 
@@ -275,11 +318,18 @@
       for (const rpc of net.rpcs) {
         try {
           const provider = new ethers.JsonRpcProvider(rpc);
-          const wallet   = new ethers.Wallet(privateKey, provider);
-          const tx = await wallet.sendTransaction({
-            to:    toAddr,
-            value: ethers.parseEther(amountIn),
-          });
+          const signer   = new ethers.Wallet(privateKey, provider);
+          let tx;
+          if (currentToken && TOKENS[currentToken]) {
+            const tok = TOKENS[currentToken];
+            const contract = new ethers.Contract(tok.address, ERC20_ABI, signer);
+            tx = await contract.transfer(toAddr, ethers.parseUnits(amountIn, tok.decimals));
+          } else {
+            tx = await signer.sendTransaction({
+              to:    toAddr,
+              value: ethers.parseEther(amountIn),
+            });
+          }
           statusEl.innerHTML =
             `Sent! Tx: <a href="${net.explorer}/tx/${tx.hash}" target="_blank" rel="noopener noreferrer"
               style="color:#4a9eff;word-break:break-all">${tx.hash}</a>`;

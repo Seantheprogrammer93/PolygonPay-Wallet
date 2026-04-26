@@ -406,6 +406,41 @@
         color: #ccc;
     }
 
+    .token-switcher {
+        display: flex;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid #2a2a2a;
+        margin-bottom: 0.85rem;
+    }
+
+    .btn-token {
+        flex: 1;
+        width: auto;
+        padding: 0.4rem 0;
+        border-radius: 0;
+        border: none;
+        background: #111;
+        color: #888;
+        font-size: 0.78rem;
+        cursor: pointer;
+        transition: background 0.15s, color 0.15s;
+    }
+
+    .btn-token + .btn-token {
+        border-left: 1px solid #2a2a2a;
+    }
+
+    .btn-token.active {
+        background: #2a1f4a;
+        color: #c9b8ff;
+    }
+
+    .btn-token:hover:not(.active) {
+        background: #1e1e1e;
+        color: #ccc;
+    }
+
     .balance-row {
         display: flex;
         justify-content: space-between;
