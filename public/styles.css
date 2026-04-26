@@ -1,4 +1,4 @@
-    * {
+* {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
@@ -514,6 +514,21 @@
         background: #1e4528;
     }
 
+    .btn-sell {
+        margin-top: 0.6rem;
+        background: #351a1a;
+        border: 1px solid #6b2e2e;
+        color: #ff6f6f;
+        width: 100%;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: background 0.2s;
+    }
+
+    .btn-sell:hover {
+        background: #451e1e;
+    }
+
     .send-status {
         margin-top: 0.6rem;
         font-size: 0.8rem;
@@ -528,3 +543,4 @@
     .send-status--ok {
         color: #4caf87;
     }
+}

@@ -125,7 +125,10 @@
       <button class="btn-download" onclick="downloadJson()" id="btn-export" style="display:none"
         aria-label="Download wallet keypair as JSON file">&#8595; Export Wallet</button>
     </div>
-    <button class="btn-buy" onclick="openBuyCrypto()" aria-label="Buy crypto via MoonPay">&#43; Buy Crypto</button>
+    <div class="btn-row" style="margin-top:0.6rem;">
+      <button class="btn-buy" onclick="openBuyCrypto()" aria-label="Buy crypto via MoonPay">&#43; Buy Crypto</button>
+      <button class="btn-sell" onclick="openSellCrypto()" aria-label="Sell crypto for fiat">&#8722; Sell Crypto</button>
+    </div>
     <p class="error" id="error" role="alert" aria-live="assertive" aria-atomic="true"></p>
     <p class="error" id="import-error" role="alert" aria-live="assertive" aria-atomic="true"></p>
 
@@ -333,74 +336,23 @@
       );
     }
     // ─────────────────────────────────────────────────────────────────────
-
-    // ── Send ─────────────────────────────────────────────────────────────
-    async function sendCrypto() {
-      const toAddr = document.getElementById('send-to').value.trim();
-      const amountIn = document.getElementById('send-amount').value.trim();
-      const statusEl = document.getElementById('send-status');
-      const sendBtn = document.getElementById('btn-send');
-      const privateKey = document.getElementById('privateKey').textContent.trim();
-
-      statusEl.className = 'send-status';
-      statusEl.textContent = '';
-
-      if (!ethers.isAddress(toAddr)) {
-        statusEl.textContent = 'Invalid recipient address.';
-        statusEl.classList.add('send-status--error');
-        return;
-      }
-      if (!amountIn || isNaN(amountIn) || parseFloat(amountIn) <= 0) {
-        statusEl.textContent = 'Enter a valid amount.';
-        statusEl.classList.add('send-status--error');
-        return;
-      }
-
+    // ── Sell Crypto ──────────────────────────────────────────────────────
+    function openSellCrypto() {
+      const address = document.getElementById('address').textContent.trim();
       const net = NETWORKS[currentNetwork];
-      const sendSymbol = currentToken ? TOKENS[currentNetwork][currentToken].symbol : net.symbol;
-      const confirmed = confirm(
-        `Send ${amountIn} ${sendSymbol} to\n${toAddr}\n\nThis transaction cannot be reversed. Proceed?`
+      const currencyCode = currentToken === 'usdc' ? 'usdc' : net.symbol.toLowerCase();
+      // Placeholder: Replace with actual MoonPay or partner sell URL if available
+      const url = new URL('https://sell.moonpay.com/');
+      url.searchParams.set('currencyCode', currencyCode);
+      if (address) url.searchParams.set('walletAddress', address);
+      const w = 480, h = 700;
+      const left = window.screenX + (window.outerWidth - w) / 2;
+      const top = window.screenY + (window.outerHeight - h) / 2;
+      window.open(
+        url.toString(),
+        'moonpay_sell_popup',
+        `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes,status=no,toolbar=no,menubar=no`
       );
-      if (!confirmed) return;
-
-      sendBtn.disabled = true;
-      sendBtn.textContent = 'Sending…';
-      statusEl.textContent = '';
-
-      let lastErr;
-      for (const rpc of net.rpcs) {
-        try {
-          const provider = new ethers.JsonRpcProvider(rpc);
-          const signer = new ethers.Wallet(privateKey, provider);
-          let tx;
-          if (currentToken && TOKENS[currentNetwork]?.[currentToken]) {
-            const tok = TOKENS[currentNetwork][currentToken];
-            const contract = new ethers.Contract(tok.address, ERC20_ABI, signer);
-            tx = await contract.transfer(toAddr, ethers.parseUnits(amountIn, tok.decimals));
-          } else {
-            tx = await signer.sendTransaction({
-              to: toAddr,
-              value: ethers.parseEther(amountIn),
-            });
-          }
-          statusEl.innerHTML =
-            `Sent! Tx: <a href="${net.explorer}/tx/${tx.hash}" target="_blank" rel="noopener noreferrer"
-              style="color:#4a9eff;word-break:break-all">${tx.hash}</a>`;
-          statusEl.classList.add('send-status--ok');
-          document.getElementById('send-to').value = '';
-          document.getElementById('send-amount').value = '';
-          fetchBalance(document.getElementById('address').textContent.trim());
-          sendBtn.disabled = false;
-          sendBtn.textContent = 'Send';
-          return;
-        } catch (e) {
-          lastErr = e;
-        }
-      }
-      statusEl.textContent = 'Transaction failed: ' + (lastErr?.reason || lastErr?.message || 'Unknown error');
-      statusEl.classList.add('send-status--error');
-      sendBtn.disabled = false;
-      sendBtn.textContent = 'Send';
     }
     // ─────────────────────────────────────────────────────────────────────
 
