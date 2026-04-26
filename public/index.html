@@ -591,7 +591,8 @@
       msg.style.fontSize = '1.01rem';
       msg.style.color = '#f0a040';
       msg.style.lineHeight = '1.6';
-      msg.innerHTML = `Are you sure you want to <b style='color:#e04a3f'>delete</b> the selected wallet address?<br><span style='font-family:monospace;font-size:0.93em;color:#fff;background:#3a2a00;padding:0.13em 0.5em;border-radius:5px;margin-top:0.5em;display:inline-block'>${address.slice(0, 10)}026${address.slice(-8)}</span><br><span style='display:inline-block;margin-top:0.7em;font-size:0.93em;'>This action cannot be undone.</span><br><a href="https://ethereum.org/en/wallets/" target="_blank" rel="noopener noreferrer" style="color:#4a9eff;cursor:help;display:inline-block;margin-top:0.7em;" aria-label="Learn more about keeping your private key safe (opens in a new tab)">Learn more <svg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 16 16' fill='currentColor' style='vertical-align:middle;' aria-hidden='true' focusable='false'><path fill-rule='evenodd' d='M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z'/><path fill-rule='evenodd' d='M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z'/></svg></a>`;
+        const shortAddr = address.slice(0, 10) + '\u2026' + address.slice(-8);
+        msg.innerHTML = `Are you sure you want to <b style='color:#e04a3f'>delete</b> the selected wallet address?<br><span style='font-family:monospace;font-size:0.93em;color:#fff;background:#3a2a00;padding:0.13em 0.5em;border-radius:5px;margin-top:0.5em;display:inline-block'>${shortAddr}</span></a>`;
       box.appendChild(msg);
 
       const btnRow = document.createElement('div');
