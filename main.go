@@ -139,9 +139,18 @@ func headersMiddleware(next http.Handler) http.Handler {
 }
 
 func main() {
+
 	loadEnv(".env")
 
 	mux := http.NewServeMux()
+
+	// Pretty URLs for legal pages
+	mux.HandleFunc("/privacy-policy", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "./public/privacy-policy.html")
+	})
+	mux.HandleFunc("/terms-of-service", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "./public/terms-of-service.html")
+	})
 
 	// RPC proxy routes — only registered when an API URL is configured.
 	// The browser calls /rpc/eth or /rpc/matic; the key never leaves the server.
