@@ -4,7 +4,93 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PolygonPay Wallet</title>
+
+  <!-- Primary SEO -->
+  <title>PolygonPay — Free Non-Custodial Ethereum &amp; Polygon Wallet Generator</title>
+  <meta name="description" content="Instantly generate a secure Ethereum and Polygon wallet in your browser. PolygonPay is 100% non-custodial — your private key is never sent to any server." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://polygonpay.com/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://polygonpay.com/" />
+  <meta property="og:site_name" content="PolygonPay" />
+  <meta property="og:title" content="PolygonPay — Free Non-Custodial Ethereum &amp; Polygon Wallet Generator" />
+  <meta property="og:description" content="Instantly generate a secure Ethereum and Polygon wallet in your browser. 100% non-custodial — your private key never leaves your device." />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="PolygonPay — Free Non-Custodial Ethereum &amp; Polygon Wallet Generator" />
+  <meta name="twitter:description" content="Instantly generate a secure Ethereum and Polygon wallet in your browser. 100% non-custodial — your private key never leaves your device." />
+
+  <!-- JSON-LD: WebApplication + FAQPage -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": "PolygonPay",
+        "url": "https://polygonpay.com/",
+        "description": "Free non-custodial Ethereum and Polygon wallet generator. Private keys are generated in-browser and never transmitted to any server.",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is a non-custodial wallet?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A non-custodial wallet means only you hold your private key — no company, server, or third party stores or has access to it. You have full control over your funds, and full responsibility for keeping your key safe."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is a private key?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A private key is a secret 256-bit number that proves ownership of your wallet. Anyone who knows your private key can spend all the funds in that wallet. Never share it, screenshot it, or store it in cloud services like Google Drive or iCloud."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does PolygonPay ever see my private key?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Key generation happens entirely inside your browser using the Web Crypto API. Your private key is never sent to any server. You can verify this by running PolygonPay offline — it will still generate valid keypairs."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I use this wallet with MetaMask or other wallets?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. The generated private key is a standard Ethereum-compatible key. You can import it into MetaMask, Trust Wallet, Ledger Live, or any other wallet that supports private key import."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What happens if I lose my private key?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Your funds will be permanently inaccessible. There is no password reset, no support team, and no way to recover a lost private key. Store it in at least two secure offline locations — such as a hardware wallet, encrypted USB drive, or written on paper stored safely."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
   <script src="https://cdn.jsdelivr.net/npm/ethers@6.16.0/dist/ethers.umd.min.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -12,6 +98,7 @@
 <body>
   <div class="card" role="main">
     <h1>PolygonPay Wallet</h1>
+    <p class="subtitle">Generate and manage Ethereum &amp; Polygon wallets — keys created locally in your browser, never sent to any server.</p>
     <p class="disclaimer">PolygonPay is a non-custodial cryptocurrency wallet. <u>You are solely responsible for keeping your private key(s) safe and secure. If you lose your private key(s), they cannot be recovered and access to your funds will be permanently lost.</u> <a href="https://ethereum.org/en/wallets/" target="_blank" rel="noopener noreferrer" style="color:#4a9eff;cursor:help;" aria-label="Learn more about keeping your private key safe (opens in a new tab)">Learn more <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:middle;" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/><path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/></svg></a></p>
 
     <button id="btn" onclick="generate()">Generate Wallet</button>
