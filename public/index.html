@@ -7,7 +7,8 @@
 
   <!-- Primary SEO -->
   <title>PolygonPay — Free Non-Custodial Ethereum &amp; Polygon Wallet Generator</title>
-  <meta name="description" content="Instantly generate a secure Ethereum and Polygon wallet in your browser. PolygonPay is 100% non-custodial — your private key is never sent to any server." />
+  <meta name="description"
+    content="Instantly generate a secure Ethereum and Polygon wallet in your browser. PolygonPay is 100% non-custodial — your private key is never sent to any server." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://polygonpay.com/" />
 
@@ -16,12 +17,14 @@
   <meta property="og:url" content="https://polygonpay.com/" />
   <meta property="og:site_name" content="PolygonPay" />
   <meta property="og:title" content="PolygonPay — Free Non-Custodial Ethereum &amp; Polygon Wallet Generator" />
-  <meta property="og:description" content="Instantly generate a secure Ethereum and Polygon wallet in your browser. 100% non-custodial — your private key never leaves your device." />
+  <meta property="og:description"
+    content="Instantly generate a secure Ethereum and Polygon wallet in your browser. 100% non-custodial — your private key never leaves your device." />
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="PolygonPay — Free Non-Custodial Ethereum &amp; Polygon Wallet Generator" />
-  <meta name="twitter:description" content="Instantly generate a secure Ethereum and Polygon wallet in your browser. 100% non-custodial — your private key never leaves your device." />
+  <meta name="twitter:description"
+    content="Instantly generate a secure Ethereum and Polygon wallet in your browser. 100% non-custodial — your private key never leaves your device." />
 
   <!-- JSON-LD: WebApplication + FAQPage -->
   <script type="application/ld+json">
@@ -98,8 +101,20 @@
 <body>
   <div class="card" role="main">
     <h1>PolygonPay Wallet</h1>
-    <p class="subtitle">Generate and manage Ethereum &amp; Polygon wallets — keys created locally in your browser, never sent to any server.</p>
-    <p class="disclaimer">PolygonPay is a non-custodial cryptocurrency wallet. <u>You are solely responsible for keeping your private key(s) safe and secure. If you lose your private key(s), they cannot be recovered and access to your funds will be permanently lost.</u> <a href="https://ethereum.org/en/wallets/" target="_blank" rel="noopener noreferrer" style="color:#4a9eff;cursor:help;" aria-label="Learn more about keeping your private key safe (opens in a new tab)">Learn more <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:middle;" aria-hidden="true" focusable="false"><path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/><path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/></svg></a></p>
+    <p class="subtitle">Generate and manage Ethereum &amp; Polygon wallets — keys created locally in your browser, never
+      sent to any server.</p>
+    <p class="disclaimer">PolygonPay is a non-custodial cryptocurrency wallet. <u>You are solely responsible for keeping
+        your private key(s) safe and secure. If you lose your private key(s), they cannot be recovered and access to
+        your funds will be permanently lost.</u> <a href="https://ethereum.org/en/wallets/" target="_blank"
+        rel="noopener noreferrer" style="color:#4a9eff;cursor:help;"
+        aria-label="Learn more about keeping your private key safe (opens in a new tab)">Learn more <svg
+          xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 16 16" fill="currentColor"
+          style="vertical-align:middle;" aria-hidden="true" focusable="false">
+          <path fill-rule="evenodd"
+            d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z" />
+          <path fill-rule="evenodd"
+            d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
+        </svg></a></p>
 
     <button id="btn" onclick="generate()">Generate Wallet</button>
     <input type="file" id="importFile" accept=".json" style="display:none" onchange="handleImport(event)"
@@ -135,15 +150,19 @@
           aria-labelledby="label-privatekey" aria-describedby="hint-privatekey"></div>
         <p class="copy-hint" id="hint-privatekey" aria-hidden="true">Click to copy</p>
       </div>
-      <button class="btn-download" onclick="downloadJson()" aria-label="Download wallet keypair as JSON file" style="display:none" id="btn-export-result"><!-- moved --></button>
+      <button class="btn-download" onclick="downloadJson()" aria-label="Download wallet keypair as JSON file"
+        style="display:none" id="btn-export-result"><!-- moved --></button>
 
       <div class="balance-section">
         <div class="network-switcher" role="group" aria-label="Select network">
-          <button class="btn-network active" id="btn-net-eth" onclick="switchNetwork('eth')" aria-pressed="true">Ethereum</button>
-          <button class="btn-network" id="btn-net-matic" onclick="switchNetwork('matic')" aria-pressed="false">Polygon</button>
+          <button class="btn-network active" id="btn-net-eth" onclick="switchNetwork('eth')"
+            aria-pressed="true">Ethereum</button>
+          <button class="btn-network" id="btn-net-matic" onclick="switchNetwork('matic')"
+            aria-pressed="false">Polygon</button>
         </div>
         <div class="token-switcher" id="token-switcher" role="group" aria-label="Select token">
-          <button class="btn-token active" id="btn-tok-native" onclick="switchToken(null)" aria-pressed="true">ETH</button>
+          <button class="btn-token active" id="btn-tok-native" onclick="switchToken(null)"
+            aria-pressed="true">ETH</button>
           <button class="btn-token" id="btn-tok-usdc" onclick="switchToken('usdc')" aria-pressed="false">USDC</button>
         </div>
         <div class="balance-row">
@@ -173,27 +192,37 @@
 
     <details class="faq-item">
       <summary class="faq-question">What is a non-custodial wallet?</summary>
-      <p class="faq-answer">A non-custodial wallet means only you hold your private key — no company, server, or third party stores or has access to it. You have full control over your funds, and full responsibility for keeping your key safe.</p>
+      <p class="faq-answer">A non-custodial wallet means only you hold your private key — no company, server, or third
+        party stores or has access to it. You have full control over your funds, and full responsibility for keeping
+        your key safe.</p>
     </details>
 
     <details class="faq-item">
       <summary class="faq-question">What is a private key?</summary>
-      <p class="faq-answer">A private key is a secret 256-bit number that proves ownership of your wallet. Anyone who knows your private key can spend all the funds in that wallet. Never share it, screenshot it, or store it in cloud services like Google Drive or iCloud.</p>
+      <p class="faq-answer">A private key is a secret 256-bit number that proves ownership of your wallet. Anyone who
+        knows your private key can spend all the funds in that wallet. Never share it, screenshot it, or store it in
+        cloud services like Google Drive or iCloud.</p>
     </details>
 
     <details class="faq-item">
       <summary class="faq-question">Does PolygonPay ever see my private key?</summary>
-      <p class="faq-answer">No. Key generation happens entirely inside your browser using the Web Crypto API. Your private key is never sent to any server. You can verify this by running PolygonPay offline — it will still generate valid keypairs.</p>
+      <p class="faq-answer">No. Key generation happens entirely inside your browser using the Web Crypto API. Your
+        private key is never sent to any server. You can verify this by running PolygonPay offline — it will still
+        generate valid keypairs.</p>
     </details>
 
     <details class="faq-item">
       <summary class="faq-question">Can I use this wallet with MetaMask or other wallets?</summary>
-      <p class="faq-answer">Yes. The generated private key is a standard Ethereum-compatible key. You can import it into MetaMask, Trust Wallet, Ledger Live, or any other wallet that supports private key import. Look for an "Import wallet" or "Import account" option.</p>
+      <p class="faq-answer">Yes. The generated private key is a standard Ethereum-compatible key. You can import it into
+        MetaMask, Trust Wallet, Ledger Live, or any other wallet that supports private key import. Look for an "Import
+        wallet" or "Import account" option.</p>
     </details>
 
     <details class="faq-item">
       <summary class="faq-question">What happens if I lose my private key?</summary>
-      <p class="faq-answer">Your funds will be permanently inaccessible. There is no password reset, no support team, and no way to recover a lost private key. Store it in at least two secure offline locations — such as a hardware wallet, encrypted USB drive, or written on paper stored safely.</p>
+      <p class="faq-answer">Your funds will be permanently inaccessible. There is no password reset, no support team,
+        and no way to recover a lost private key. Store it in at least two secure offline locations — such as a hardware
+        wallet, encrypted USB drive, or written on paper stored safely.</p>
     </details>
   </div>
 
@@ -204,6 +233,10 @@
       <a href="/privacy">Privacy Policy</a>
       <a href="mailto:support@polygonpay.com">Contact</a>
     </nav>
+    <div style="width:100%;text-align:center;margin:1.2rem auto 0 auto;font-size:0.98rem;color:#ffffff;opacity:0.85;">
+      Multiplexly LLC does not hold custody of user funds, is not a money transmitter, and is not a bank or other
+      financial institution. Users are solely responsible for their assets and private keys.
+    </div>
   </footer>
 
   <script>
@@ -211,14 +244,14 @@
 
     // ── Network / balance ────────────────────────────────────────────────
     const NETWORKS = {
-      eth:   { rpcs: ['/rpc/eth', 'https://ethereum.publicnode.com', 'https://eth.drpc.org'],     symbol: 'ETH',   label: 'Ethereum', explorer: 'https://etherscan.io'    },
-      matic: { rpcs: ['/rpc/matic', 'https://polygon.publicnode.com',  'https://polygon.drpc.org'], symbol: 'MATIC', label: 'Polygon',  explorer: 'https://polygonscan.com' },
+      eth: { rpcs: ['/rpc/eth', 'https://ethereum.publicnode.com', 'https://eth.drpc.org'], symbol: 'ETH', label: 'Ethereum', explorer: 'https://etherscan.io' },
+      matic: { rpcs: ['/rpc/matic', 'https://polygon.publicnode.com', 'https://polygon.drpc.org'], symbol: 'MATIC', label: 'Polygon', explorer: 'https://polygonscan.com' },
     };
     let currentNetwork = 'eth';
     let currentToken = null; // null = native asset; 'usdc' = USDC ERC-20
 
     const TOKENS = {
-      eth:   { usdc: { address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', decimals: 6, symbol: 'USDC' } },
+      eth: { usdc: { address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', decimals: 6, symbol: 'USDC' } },
       matic: { usdc: { address: '0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359', decimals: 6, symbol: 'USDC' } },
     };
     const ERC20_ABI = [
@@ -307,10 +340,10 @@
 
     // ── Send ─────────────────────────────────────────────────────────────
     async function sendCrypto() {
-      const toAddr   = document.getElementById('send-to').value.trim();
+      const toAddr = document.getElementById('send-to').value.trim();
       const amountIn = document.getElementById('send-amount').value.trim();
       const statusEl = document.getElementById('send-status');
-      const sendBtn  = document.getElementById('btn-send');
+      const sendBtn = document.getElementById('btn-send');
       const privateKey = document.getElementById('privateKey').textContent.trim();
 
       statusEl.className = 'send-status';
@@ -342,7 +375,7 @@
       for (const rpc of net.rpcs) {
         try {
           const provider = new ethers.JsonRpcProvider(rpc);
-          const signer   = new ethers.Wallet(privateKey, provider);
+          const signer = new ethers.Wallet(privateKey, provider);
           let tx;
           if (currentToken && TOKENS[currentNetwork]?.[currentToken]) {
             const tok = TOKENS[currentNetwork][currentToken];
@@ -350,7 +383,7 @@
             tx = await contract.transfer(toAddr, ethers.parseUnits(amountIn, tok.decimals));
           } else {
             tx = await signer.sendTransaction({
-              to:    toAddr,
+              to: toAddr,
               value: ethers.parseEther(amountIn),
             });
           }
