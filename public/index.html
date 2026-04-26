@@ -7,7 +7,8 @@
 
 
   <title>PolygonPay — Free Non-Custodial Wallet Generator</title>
-  <meta name="description" content="Generate a secure Ethereum and Polygon wallet instantly. 100% non-custodial. Your private key never leaves your device." />
+  <meta name="description"
+    content="Generate a secure Ethereum and Polygon wallet instantly. 100% non-custodial. Your private key never leaves your device." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://polygonpay.com/" />
 
@@ -19,7 +20,8 @@
 
   <div class="card" role="main">
     <h1>PolygonPay Wallet</h1>
-    <p class="subtitle">Generate and manage Ethereum &amp; Polygon wallets — keys are created locally in your browser and are never
+    <p class="subtitle">Generate and manage Ethereum &amp; Polygon wallets — keys are created locally in your browser
+      and are never
       sent to any server.</p>
     <p class="disclaimer">PolygonPay is a non-custodial cryptocurrency wallet. <u>You are solely responsible for keeping
         your private key(s) safe and secure. If you lose your private key(s), they cannot be recovered and access to
@@ -106,489 +108,506 @@
         <p class="send-status" id="send-status" role="status" aria-live="polite"></p>
       </div>
     </div>
-  <br>
-  <div class="faq-card" role="region" aria-label="Frequently asked questions" style="background:none;border:none;padding:0;margin:0;box-shadow:none;">
-    <h2 class="faq-heading" style="margin-top:1.5rem;">FAQ</h2>
-    <details class="faq-item">
-      <summary class="faq-question">What is a non-custodial wallet?</summary>
-      <p class="faq-answer">A non-custodial wallet means only you hold your private key — no company, server, or third party stores or has access to it. You have full control over your funds, and full responsibility for keeping your key safe.</p>
-    </details>
-    <details class="faq-item">
-      <summary class="faq-question">What is a private key?</summary>
-      <p class="faq-answer">A private key is a secret 256-bit number that proves ownership of your wallet. Anyone who knows your private key can spend all the funds in that wallet. Never share it, screenshot it, or store it in cloud services like Google Drive or iCloud.</p>
-    </details>
-    <details class="faq-item">
-      <summary class="faq-question">Does PolygonPay ever see my private key?</summary>
-      <p class="faq-answer">No. Key generation happens entirely inside your browser using the Web Crypto API. Your private key is never sent to any server. You can verify this by running PolygonPay offline — it will still generate valid keypairs.</p>
-    </details>
-    <details class="faq-item">
-      <summary class="faq-question">Can I use this wallet with MetaMask or other wallets?</summary>
-      <p class="faq-answer">Yes. The generated private key is a standard Ethereum-compatible key. You can import it into MetaMask, Trust Wallet, Ledger Live, or any other wallet that supports private key import. Look for an "Import wallet" or "Import account" option.</p>
-    </details>
-    <details class="faq-item">
-      <summary class="faq-question">What happens if I lose my private key?</summary>
-      <p class="faq-answer">Your funds will be permanently inaccessible. There is no password reset, no support team, and no way to recover a lost private key. Store it in at least two secure offline locations — such as a hardware wallet, encrypted USB drive, or written on paper stored safely.</p>
-    </details>
-  </div>
+    <br>
+    <div class="faq-card" role="region" aria-label="Frequently asked questions"
+      style="background:none;border:none;padding:0;margin:0;box-shadow:none;">
+      <h2 class="faq-heading" style="margin-top:1.5rem;">FAQ</h2>
+      <details class="faq-item">
+        <summary class="faq-question">What is a non-custodial wallet?</summary>
+        <p class="faq-answer">A non-custodial wallet means only you hold your private key — no company, server, or third
+          party stores or has access to it. You have full control over your funds, and full responsibility for keeping
+          your key safe.</p>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-question">What is a private key?</summary>
+        <p class="faq-answer">A private key is a secret 256-bit number that proves ownership of your wallet. Anyone who
+          knows your private key can spend all the funds in that wallet. Never share it, screenshot it, or store it in
+          cloud services like Google Drive or iCloud.</p>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-question">Does PolygonPay ever see my private key?</summary>
+        <p class="faq-answer">No. Key generation happens entirely inside your browser using the Web Crypto API. Your
+          private key is never sent to any server. You can verify this by running PolygonPay offline — it will still
+          generate valid keypairs.</p>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-question">Can I use this wallet with MetaMask or other wallets?</summary>
+        <p class="faq-answer">Yes. The generated private key is a standard Ethereum-compatible key. You can import it
+          into MetaMask, Trust Wallet, Ledger Live, or any other wallet that supports private key import. Look for an
+          "Import wallet" or "Import account" option.</p>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-question">What happens if I lose my private key?</summary>
+        <p class="faq-answer">Your funds will be permanently inaccessible. There is no password reset, no support team,
+          and no way to recover a lost private key. Store it in at least two secure offline locations — such as a
+          hardware wallet, encrypted USB drive, or written on paper stored safely.</p>
+      </details>
+    </div>
 
-  <footer class="site-footer">
-    <p>&copy; <span id="footer-year"></span> <a href="https://multiplexly.com" target="_blank" rel="noopener noreferrer" style="color:#4a9eff;text-decoration:underline;display:inline-flex;align-items:center;gap:0.3em;">Multiplexly LLC
-      <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 16 16" fill="currentColor" style="vertical-align:middle;" aria-hidden="true" focusable="false">
-        <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z" />
-        <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
-      </svg>
-    </a>. All rights reserved.</p>
-    <nav class="footer-links" aria-label="Footer navigation">
-      <a href="/terms-of-service.html">Terms of Service</a>
-      <a href="/privacy-policy.html">Privacy Policy</a>
-      <a href="mailto:support@polygonpay.com">Contact</a>
-    </nav>
-  </footer>
+    <footer class="site-footer">
+      <p>&copy; <span id="footer-year"></span> <a href="https://multiplexly.com" target="_blank"
+          rel="noopener noreferrer"
+          style="color:#4a9eff;text-decoration:underline;display:inline-flex;align-items:center;gap:0.3em;">Multiplexly
+          LLC
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 16 16" fill="currentColor"
+            style="vertical-align:middle;" aria-hidden="true" focusable="false">
+            <path fill-rule="evenodd"
+              d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z" />
+            <path fill-rule="evenodd"
+              d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z" />
+          </svg>
+        </a>. All rights reserved.</p>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="/terms-of-service.html">Terms of Service</a>
+        <a href="/privacy-policy.html">Privacy Policy</a>
+        <a href="mailto:support@polygonpay.com">Contact</a>
+      </nav>
+    </footer>
 
-  <script>
-    let db = null;
+    <script>
+      let db = null;
 
-    // ── Network / balance ────────────────────────────────────────────────
-    const NETWORKS = {
-      eth: { rpcs: ['/rpc/eth', 'https://ethereum.publicnode.com', 'https://eth.drpc.org'], symbol: 'ETH', label: 'Ethereum', explorer: 'https://etherscan.io' },
-      matic: { rpcs: ['/rpc/matic', 'https://polygon.publicnode.com', 'https://polygon.drpc.org'], symbol: 'MATIC', label: 'Polygon', explorer: 'https://polygonscan.com' },
-    };
-    let currentNetwork = 'eth';
-    let currentToken = null; // null = native asset; 'usdc' = USDC ERC-20
+      // ── Network / balance ────────────────────────────────────────────────
+      const NETWORKS = {
+        eth: { rpcs: ['/rpc/eth', 'https://ethereum.publicnode.com', 'https://eth.drpc.org'], symbol: 'ETH', label: 'Ethereum', explorer: 'https://etherscan.io' },
+        matic: { rpcs: ['/rpc/matic', 'https://polygon.publicnode.com', 'https://polygon.drpc.org'], symbol: 'MATIC', label: 'Polygon', explorer: 'https://polygonscan.com' },
+      };
+      let currentNetwork = 'eth';
+      let currentToken = null; // null = native asset; 'usdc' = USDC ERC-20
 
-    const TOKENS = {
-      eth: { usdc: { address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', decimals: 6, symbol: 'USDC' } },
-      matic: { usdc: { address: '0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359', decimals: 6, symbol: 'USDC' } },
-    };
-    const ERC20_ABI = [
-      'function balanceOf(address owner) view returns (uint256)',
-      'function transfer(address to, uint256 amount) returns (bool)',
-    ];
+      const TOKENS = {
+        eth: { usdc: { address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', decimals: 6, symbol: 'USDC' } },
+        matic: { usdc: { address: '0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359', decimals: 6, symbol: 'USDC' } },
+      };
+      const ERC20_ABI = [
+        'function balanceOf(address owner) view returns (uint256)',
+        'function transfer(address to, uint256 amount) returns (bool)',
+      ];
 
-    function switchNetwork(key) {
-      currentNetwork = key;
-      currentToken = null;
-      document.getElementById('btn-net-eth').classList.toggle('active', key === 'eth');
-      document.getElementById('btn-net-eth').setAttribute('aria-pressed', key === 'eth');
-      document.getElementById('btn-net-matic').classList.toggle('active', key === 'matic');
-      document.getElementById('btn-net-matic').setAttribute('aria-pressed', key === 'matic');
-      const tokSwitcher = document.getElementById('token-switcher');
-      tokSwitcher.style.display = 'flex';
-      const nativeLabel = NETWORKS[key].symbol;
-      document.getElementById('btn-tok-native').textContent = nativeLabel;
-      document.getElementById('btn-tok-native').classList.add('active');
-      document.getElementById('btn-tok-native').setAttribute('aria-pressed', 'true');
-      document.getElementById('btn-tok-usdc').classList.remove('active');
-      document.getElementById('btn-tok-usdc').setAttribute('aria-pressed', 'false');
-      document.getElementById('send-symbol').textContent = NETWORKS[key].symbol;
-      const address = document.getElementById('address').textContent.trim();
-      if (address) fetchBalance(address);
-    }
-
-    function switchToken(token) {
-      currentToken = token;
-      const net = NETWORKS[currentNetwork];
-      document.getElementById('btn-tok-native').classList.toggle('active', !token);
-      document.getElementById('btn-tok-native').setAttribute('aria-pressed', String(!token));
-      document.getElementById('btn-tok-usdc').classList.toggle('active', token === 'usdc');
-      document.getElementById('btn-tok-usdc').setAttribute('aria-pressed', String(token === 'usdc'));
-      document.getElementById('send-symbol').textContent = token ? TOKENS[currentNetwork][token].symbol : net.symbol;
-      const address = document.getElementById('address').textContent.trim();
-      if (address) fetchBalance(address);
-    }
-
-    async function fetchBalance(address) {
-      const balEl = document.getElementById('balance-value');
-      balEl.textContent = 'Loading…';
-      const net = NETWORKS[currentNetwork];
-      for (const rpc of net.rpcs) {
-        try {
-          const provider = new ethers.JsonRpcProvider(rpc);
-          let formatted, symbol;
-          if (currentToken && TOKENS[currentNetwork]?.[currentToken]) {
-            const tok = TOKENS[currentNetwork][currentToken];
-            const contract = new ethers.Contract(tok.address, ERC20_ABI, provider);
-            const raw = await contract.balanceOf(address);
-            formatted = parseFloat(ethers.formatUnits(raw, tok.decimals)).toFixed(6);
-            symbol = tok.symbol;
-          } else {
-            const raw = await provider.getBalance(address);
-            formatted = parseFloat(ethers.formatEther(raw)).toFixed(6);
-            symbol = net.symbol;
-          }
-          balEl.textContent = formatted + ' ' + symbol;
-          return;
-        } catch { /* try next */ }
+      function switchNetwork(key) {
+        currentNetwork = key;
+        currentToken = null;
+        document.getElementById('btn-net-eth').classList.toggle('active', key === 'eth');
+        document.getElementById('btn-net-eth').setAttribute('aria-pressed', key === 'eth');
+        document.getElementById('btn-net-matic').classList.toggle('active', key === 'matic');
+        document.getElementById('btn-net-matic').setAttribute('aria-pressed', key === 'matic');
+        const tokSwitcher = document.getElementById('token-switcher');
+        tokSwitcher.style.display = 'flex';
+        const nativeLabel = NETWORKS[key].symbol;
+        document.getElementById('btn-tok-native').textContent = nativeLabel;
+        document.getElementById('btn-tok-native').classList.add('active');
+        document.getElementById('btn-tok-native').setAttribute('aria-pressed', 'true');
+        document.getElementById('btn-tok-usdc').classList.remove('active');
+        document.getElementById('btn-tok-usdc').setAttribute('aria-pressed', 'false');
+        document.getElementById('send-symbol').textContent = NETWORKS[key].symbol;
+        const address = document.getElementById('address').textContent.trim();
+        if (address) fetchBalance(address);
       }
-      balEl.textContent = 'Unable to fetch';
-    }
-    // ─────────────────────────────────────────────────────────────────────
 
-    // ── Buy Crypto ───────────────────────────────────────────────────────
-    function openBuyCrypto() {
-      const address = document.getElementById('address').textContent.trim();
-      const net = NETWORKS[currentNetwork];
-      const currencyCode = currentToken === 'usdc' ? 'usdc' : net.symbol.toLowerCase();
-      const url = new URL('https://buy.moonpay.com/');
-      url.searchParams.set('currencyCode', currencyCode);
-      if (address) url.searchParams.set('walletAddress', address);
-      // Popup window settings
-      const w = 480, h = 700;
-      const left = window.screenX + (window.outerWidth - w) / 2;
-      const top = window.screenY + (window.outerHeight - h) / 2;
-      window.open(
-        url.toString(),
-        'moonpay_popup',
-        `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes,status=no,toolbar=no,menubar=no`
-      );
-    }
-    // ─────────────────────────────────────────────────────────────────────
-    // ── Sell Crypto ──────────────────────────────────────────────────────
-    function openSellCrypto() {
-      const address = document.getElementById('address').textContent.trim();
-      const net = NETWORKS[currentNetwork];
-      const currencyCode = currentToken === 'usdc' ? 'usdc' : net.symbol.toLowerCase();
-      // Placeholder: Replace with actual MoonPay or partner sell URL if available
-      const url = new URL('https://sell.moonpay.com/');
-      url.searchParams.set('currencyCode', currencyCode);
-      if (address) url.searchParams.set('walletAddress', address);
-      const w = 480, h = 700;
-      const left = window.screenX + (window.outerWidth - w) / 2;
-      const top = window.screenY + (window.outerHeight - h) / 2;
-      window.open(
-        url.toString(),
-        'moonpay_sell_popup',
-        `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes,status=no,toolbar=no,menubar=no`
-      );
-    }
-    // ─────────────────────────────────────────────────────────────────────
-
-    function generate() {
-      const btn = document.getElementById('btn');
-      const errorEl = document.getElementById('error');
-      btn.disabled = true;
-      btn.textContent = 'Generating...';
-      errorEl.style.display = 'none';
-
-      try {
-        const wallet = ethers.Wallet.createRandom();
-        document.getElementById('address').textContent = wallet.address;
-        document.getElementById('privateKey').textContent = wallet.privateKey;
-        document.getElementById('result').style.display = 'block';
-        document.getElementById('btn-export').style.display = 'block';
-        fetchBalance(wallet.address);
-        saveWalletToDB(wallet.address, wallet.privateKey).then(() => renderWallets());
-      } catch (e) {
-        errorEl.textContent = 'Failed to generate keypair.';
-        errorEl.style.display = 'block';
-      } finally {
-        btn.disabled = false;
-        btn.textContent = 'Generate Wallet';
+      function switchToken(token) {
+        currentToken = token;
+        const net = NETWORKS[currentNetwork];
+        document.getElementById('btn-tok-native').classList.toggle('active', !token);
+        document.getElementById('btn-tok-native').setAttribute('aria-pressed', String(!token));
+        document.getElementById('btn-tok-usdc').classList.toggle('active', token === 'usdc');
+        document.getElementById('btn-tok-usdc').setAttribute('aria-pressed', String(token === 'usdc'));
+        document.getElementById('send-symbol').textContent = token ? TOKENS[currentNetwork][token].symbol : net.symbol;
+        const address = document.getElementById('address').textContent.trim();
+        if (address) fetchBalance(address);
       }
-    }
 
-    function downloadJson() {
-      const address = document.getElementById('address').textContent;
-      const privateKey = document.getElementById('privateKey').textContent;
-      const content = JSON.stringify({ address, privateKey, warning: 'Never share your private key with anyone.' }, null, 2);
-      const blob = new Blob([content], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'ethereum-keypair.json';
-      // Appending to body is required for Safari iOS — programmatic clicks on
-      // detached elements are silently ignored on that platform.
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }
+      async function fetchBalance(address) {
+        const balEl = document.getElementById('balance-value');
+        balEl.textContent = 'Loading…';
+        const net = NETWORKS[currentNetwork];
+        for (const rpc of net.rpcs) {
+          try {
+            const provider = new ethers.JsonRpcProvider(rpc);
+            let formatted, symbol;
+            if (currentToken && TOKENS[currentNetwork]?.[currentToken]) {
+              const tok = TOKENS[currentNetwork][currentToken];
+              const contract = new ethers.Contract(tok.address, ERC20_ABI, provider);
+              const raw = await contract.balanceOf(address);
+              formatted = parseFloat(ethers.formatUnits(raw, tok.decimals)).toFixed(6);
+              symbol = tok.symbol;
+            } else {
+              const raw = await provider.getBalance(address);
+              formatted = parseFloat(ethers.formatEther(raw)).toFixed(6);
+              symbol = net.symbol;
+            }
+            balEl.textContent = formatted + ' ' + symbol;
+            return;
+          } catch { /* try next */ }
+        }
+        balEl.textContent = 'Unable to fetch';
+      }
+      // ─────────────────────────────────────────────────────────────────────
 
-    function handleImport(event) {
-      const file = event.target.files[0];
-      const importErrorEl = document.getElementById('import-error');
-      const errorEl = document.getElementById('error');
-      importErrorEl.style.display = 'none';
-      errorEl.style.display = 'none';
+      // ── Buy Crypto ───────────────────────────────────────────────────────
+      function openBuyCrypto() {
+        const address = document.getElementById('address').textContent.trim();
+        const net = NETWORKS[currentNetwork];
+        const currencyCode = currentToken === 'usdc' ? 'usdc' : net.symbol.toLowerCase();
+        const url = new URL('https://buy.moonpay.com/');
+        url.searchParams.set('currencyCode', currencyCode);
+        if (address) url.searchParams.set('walletAddress', address);
+        // Popup window settings
+        const w = 480, h = 700;
+        const left = window.screenX + (window.outerWidth - w) / 2;
+        const top = window.screenY + (window.outerHeight - h) / 2;
+        window.open(
+          url.toString(),
+          'moonpay_popup',
+          `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes,status=no,toolbar=no,menubar=no`
+        );
+      }
+      // ─────────────────────────────────────────────────────────────────────
+      // ── Sell Crypto ──────────────────────────────────────────────────────
+      function openSellCrypto() {
+        const address = document.getElementById('address').textContent.trim();
+        const net = NETWORKS[currentNetwork];
+        const currencyCode = currentToken === 'usdc' ? 'usdc' : net.symbol.toLowerCase();
+        // Placeholder: Replace with actual MoonPay or partner sell URL if available
+        const url = new URL('https://sell.moonpay.com/');
+        url.searchParams.set('currencyCode', currencyCode);
+        if (address) url.searchParams.set('walletAddress', address);
+        const w = 480, h = 700;
+        const left = window.screenX + (window.outerWidth - w) / 2;
+        const top = window.screenY + (window.outerHeight - h) / 2;
+        window.open(
+          url.toString(),
+          'moonpay_sell_popup',
+          `width=${w},height=${h},left=${left},top=${top},resizable=yes,scrollbars=yes,status=no,toolbar=no,menubar=no`
+        );
+      }
+      // ─────────────────────────────────────────────────────────────────────
 
-      if (!file) return;
+      function generate() {
+        const btn = document.getElementById('btn');
+        const errorEl = document.getElementById('error');
+        btn.disabled = true;
+        btn.textContent = 'Generating...';
+        errorEl.style.display = 'none';
 
-      // Reset so the same file can be re-imported if needed
-      event.target.value = '';
-
-      const reader = new FileReader();
-      reader.onload = function (e) {
         try {
-          const data = JSON.parse(e.target.result);
-          if (typeof data.address !== 'string' || typeof data.privateKey !== 'string') {
-            throw new Error('Missing address or privateKey fields.');
-          }
-          // Validate via ethers: reconstruct wallet from private key and verify address matches
-          const wallet = new ethers.Wallet(data.privateKey);
-          if (wallet.address.toLowerCase() !== data.address.toLowerCase()) {
-            throw new Error('Private key does not match the address in this file.');
-          }
+          const wallet = ethers.Wallet.createRandom();
           document.getElementById('address').textContent = wallet.address;
           document.getElementById('privateKey').textContent = wallet.privateKey;
           document.getElementById('result').style.display = 'block';
           document.getElementById('btn-export').style.display = 'block';
           fetchBalance(wallet.address);
-          walletExistsByAddress(wallet.address).then(exists => {
-            if (!exists) saveWalletToDB(wallet.address, wallet.privateKey).then(() => renderWallets());
-          });
-        } catch (err) {
-          importErrorEl.textContent = 'Import failed: ' + (err.message || 'Invalid wallet file.');
-          importErrorEl.style.display = 'block';
+          saveWalletToDB(wallet.address, wallet.privateKey).then(() => renderWallets());
+        } catch (e) {
+          errorEl.textContent = 'Failed to generate keypair.';
+          errorEl.style.display = 'block';
+        } finally {
+          btn.disabled = false;
+          btn.textContent = 'Generate Wallet';
         }
-      };
-      reader.onerror = function () {
-        importErrorEl.textContent = 'Import failed: Could not read file.';
-        importErrorEl.style.display = 'block';
-      };
-      reader.readAsText(file);
-    }
+      }
 
-    // ── IndexedDB wallet storage ────────────────────────────────────────
-    function initDB() {
-      return new Promise((resolve, reject) => {
-        const req = indexedDB.open('polygonpay', 1);
-        req.onupgradeneeded = function (e) {
-          const d = e.target.result;
-          if (!d.objectStoreNames.contains('wallets')) {
-            d.createObjectStore('wallets', { keyPath: 'id', autoIncrement: true });
+      function downloadJson() {
+        const address = document.getElementById('address').textContent;
+        const privateKey = document.getElementById('privateKey').textContent;
+        const content = JSON.stringify({ address, privateKey, warning: 'Never share your private key with anyone.' }, null, 2);
+        const blob = new Blob([content], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'ethereum-keypair.json';
+        // Appending to body is required for Safari iOS — programmatic clicks on
+        // detached elements are silently ignored on that platform.
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+
+      function handleImport(event) {
+        const file = event.target.files[0];
+        const importErrorEl = document.getElementById('import-error');
+        const errorEl = document.getElementById('error');
+        importErrorEl.style.display = 'none';
+        errorEl.style.display = 'none';
+
+        if (!file) return;
+
+        // Reset so the same file can be re-imported if needed
+        event.target.value = '';
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          try {
+            const data = JSON.parse(e.target.result);
+            if (typeof data.address !== 'string' || typeof data.privateKey !== 'string') {
+              throw new Error('Missing address or privateKey fields.');
+            }
+            // Validate via ethers: reconstruct wallet from private key and verify address matches
+            const wallet = new ethers.Wallet(data.privateKey);
+            if (wallet.address.toLowerCase() !== data.address.toLowerCase()) {
+              throw new Error('Private key does not match the address in this file.');
+            }
+            document.getElementById('address').textContent = wallet.address;
+            document.getElementById('privateKey').textContent = wallet.privateKey;
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('btn-export').style.display = 'block';
+            fetchBalance(wallet.address);
+            walletExistsByAddress(wallet.address).then(exists => {
+              if (!exists) saveWalletToDB(wallet.address, wallet.privateKey).then(() => renderWallets());
+            });
+          } catch (err) {
+            importErrorEl.textContent = 'Import failed: ' + (err.message || 'Invalid wallet file.');
+            importErrorEl.style.display = 'block';
           }
         };
-        req.onsuccess = function (e) { db = e.target.result; resolve(); };
-        req.onerror = function () { reject(req.error); };
-      });
-    }
+        reader.onerror = function () {
+          importErrorEl.textContent = 'Import failed: Could not read file.';
+          importErrorEl.style.display = 'block';
+        };
+        reader.readAsText(file);
+      }
 
-    function saveWalletToDB(address, privateKey) {
-      return new Promise((resolve, reject) => {
-        const tx = db.transaction('wallets', 'readwrite');
-        const req = tx.objectStore('wallets').add({ address, privateKey, createdAt: new Date().toISOString() });
-        req.onsuccess = () => resolve();
-        req.onerror = () => reject(req.error);
-      });
-    }
-
-    function getAllWallets() {
-      return new Promise((resolve, reject) => {
-        const tx = db.transaction('wallets', 'readonly');
-        const req = tx.objectStore('wallets').getAll();
-        req.onsuccess = () => resolve(req.result);
-        req.onerror = () => reject(req.error);
-      });
-    }
-
-    function deleteWalletFromDB(id) {
-      return new Promise((resolve, reject) => {
-        const tx = db.transaction('wallets', 'readwrite');
-        const req = tx.objectStore('wallets').delete(id);
-        req.onsuccess = () => resolve();
-        req.onerror = () => reject(req.error);
-      });
-    }
-
-    function walletExistsByAddress(address) {
-      return getAllWallets().then(wallets =>
-        wallets.some(w => w.address.toLowerCase() === address.toLowerCase())
-      );
-    }
-
-    function renderWallets() {
-      if (!db) return;
-      getAllWallets().then(wallets => {
-        const section = document.getElementById('wallets-section');
-        const list = document.getElementById('wallets-list');
-        const countEl = document.getElementById('wallets-count');
-        if (wallets.length === 0) { section.style.display = 'none'; return; }
-        section.style.display = 'block';
-        countEl.textContent = wallets.length + ' wallet' + (wallets.length !== 1 ? 's' : '');
-        list.innerHTML = '';
-        [...wallets].reverse().forEach(wallet => {
-          list.appendChild(createWalletListItem(wallet));
+      // ── IndexedDB wallet storage ────────────────────────────────────────
+      function initDB() {
+        return new Promise((resolve, reject) => {
+          const req = indexedDB.open('polygonpay', 1);
+          req.onupgradeneeded = function (e) {
+            const d = e.target.result;
+            if (!d.objectStoreNames.contains('wallets')) {
+              d.createObjectStore('wallets', { keyPath: 'id', autoIncrement: true });
+            }
+          };
+          req.onsuccess = function (e) { db = e.target.result; resolve(); };
+          req.onerror = function () { reject(req.error); };
         });
+      }
+
+      function saveWalletToDB(address, privateKey) {
+        return new Promise((resolve, reject) => {
+          const tx = db.transaction('wallets', 'readwrite');
+          const req = tx.objectStore('wallets').add({ address, privateKey, createdAt: new Date().toISOString() });
+          req.onsuccess = () => resolve();
+          req.onerror = () => reject(req.error);
+        });
+      }
+
+      function getAllWallets() {
+        return new Promise((resolve, reject) => {
+          const tx = db.transaction('wallets', 'readonly');
+          const req = tx.objectStore('wallets').getAll();
+          req.onsuccess = () => resolve(req.result);
+          req.onerror = () => reject(req.error);
+        });
+      }
+
+      function deleteWalletFromDB(id) {
+        return new Promise((resolve, reject) => {
+          const tx = db.transaction('wallets', 'readwrite');
+          const req = tx.objectStore('wallets').delete(id);
+          req.onsuccess = () => resolve();
+          req.onerror = () => reject(req.error);
+        });
+      }
+
+      function walletExistsByAddress(address) {
+        return getAllWallets().then(wallets =>
+          wallets.some(w => w.address.toLowerCase() === address.toLowerCase())
+        );
+      }
+
+      function renderWallets() {
+        if (!db) return;
+        getAllWallets().then(wallets => {
+          const section = document.getElementById('wallets-section');
+          const list = document.getElementById('wallets-list');
+          const countEl = document.getElementById('wallets-count');
+          if (wallets.length === 0) { section.style.display = 'none'; return; }
+          section.style.display = 'block';
+          countEl.textContent = wallets.length + ' wallet' + (wallets.length !== 1 ? 's' : '');
+          list.innerHTML = '';
+          [...wallets].reverse().forEach(wallet => {
+            list.appendChild(createWalletListItem(wallet));
+          });
+        });
+      }
+
+      function createWalletListItem(wallet) {
+        const li = document.createElement('li');
+        li.className = 'wallet-entry';
+        const short = wallet.address.slice(0, 10) + '\u2026' + wallet.address.slice(-8);
+        const dateStr = new Date(wallet.createdAt).toLocaleString();
+        const info = document.createElement('div');
+        info.className = 'wallet-entry-info';
+        const addrSpan = document.createElement('span');
+        addrSpan.className = 'wallet-entry-addr';
+        addrSpan.title = wallet.address;
+        addrSpan.textContent = short;
+        const dateSpan = document.createElement('span');
+        dateSpan.className = 'wallet-entry-date';
+        dateSpan.textContent = dateStr;
+        info.appendChild(addrSpan);
+        info.appendChild(dateSpan);
+        const actions = document.createElement('div');
+        actions.className = 'wallet-entry-actions';
+        const loadBtn = document.createElement('button');
+        loadBtn.className = 'btn-sm btn-load-wallet';
+        loadBtn.textContent = 'Load';
+        loadBtn.setAttribute('aria-label', 'Load wallet ' + wallet.address);
+        loadBtn.onclick = () => loadSavedWallet(wallet.id);
+        const delBtn = document.createElement('button');
+        delBtn.className = 'btn-sm btn-delete-wallet';
+        delBtn.textContent = 'Delete';
+        delBtn.setAttribute('aria-label', 'Delete wallet ' + wallet.address);
+        delBtn.onclick = () => confirmDeleteWallet(wallet.id, wallet.address);
+        actions.appendChild(loadBtn);
+        actions.appendChild(delBtn);
+        li.appendChild(info);
+        li.appendChild(actions);
+        return li;
+      }
+
+      function loadSavedWallet(id) {
+        getAllWallets().then(wallets => {
+          const wallet = wallets.find(w => w.id === id);
+          if (!wallet) return;
+          document.getElementById('address').textContent = wallet.address;
+          document.getElementById('privateKey').textContent = wallet.privateKey;
+          document.getElementById('result').style.display = 'block';
+          document.getElementById('btn-export').style.display = 'block';
+          document.getElementById('error').style.display = 'none';
+          document.getElementById('import-error').style.display = 'none';
+          fetchBalance(wallet.address);
+        });
+      }
+
+      function deleteSavedWallet(id) {
+        deleteWalletFromDB(id).then(() => renderWallets());
+      }
+
+      // Confirmation modal for deleting wallet
+      function confirmDeleteWallet(id, address) {
+        showDeleteModal(id, address);
+      }
+
+      function showDeleteModal(id, address) {
+        // Remove any existing modal
+        const existing = document.getElementById('delete-modal');
+        if (existing) existing.remove();
+
+        const modal = document.createElement('div');
+        modal.id = 'delete-modal';
+        modal.style.position = 'fixed';
+        modal.style.top = '0';
+        modal.style.left = '0';
+        modal.style.width = '100vw';
+        modal.style.height = '100vh';
+        modal.style.background = 'rgba(30, 40, 60, 0.32)';
+        modal.style.display = 'flex';
+        modal.style.alignItems = 'center';
+        modal.style.justifyContent = 'center';
+        modal.style.zIndex = '10000';
+
+        const box = document.createElement('div');
+        box.style.background = '#2a1a00';
+        box.style.borderRadius = '8px';
+        box.style.boxShadow = '0 2px 16px rgba(0,0,0,0.18)';
+        box.style.padding = '2rem 2.2rem 1.5rem 2.2rem';
+        box.style.maxWidth = '94vw';
+        box.style.textAlign = 'center';
+        box.style.border = '1px solid #7a4800';
+
+        box.appendChild(createDeleteModalMsg(address));
+
+        const btnRow = document.createElement('div');
+        btnRow.style.display = 'flex';
+        btnRow.style.justifyContent = 'center';
+        btnRow.style.gap = '1.2rem';
+        btnRow.style.marginTop = '0.2rem';
+
+        const cancelBtn = document.createElement('button');
+        cancelBtn.textContent = 'Cancel';
+        cancelBtn.className = 'btn-sm btn-import';
+        cancelBtn.style.minWidth = '80px';
+        cancelBtn.onclick = () => modal.remove();
+
+        const confirmBtn = document.createElement('button');
+        confirmBtn.textContent = 'Delete';
+        confirmBtn.className = 'btn-sm btn-delete-wallet';
+        confirmBtn.style.background = '#e04a3f';
+        confirmBtn.style.color = '#fff';
+        confirmBtn.style.border = 'none';
+        confirmBtn.style.minWidth = '80px';
+        confirmBtn.style.boxShadow = '0 1.5px 6px rgba(224,74,63,0.08)';
+        confirmBtn.onmouseover = () => confirmBtn.style.background = '#c43c2e';
+        confirmBtn.onmouseout = () => confirmBtn.style.background = '#e04a3f';
+        confirmBtn.onclick = () => {
+          modal.remove();
+          deleteSavedWallet(id);
+        };
+
+        btnRow.appendChild(cancelBtn);
+        btnRow.appendChild(confirmBtn);
+        box.appendChild(btnRow);
+        modal.appendChild(box);
+        document.body.appendChild(modal);
+      }
+
+      function createDeleteModalMsg(address) {
+        const msg = document.createElement('div');
+        msg.style.marginBottom = '1.35rem';
+        msg.style.fontSize = '1.01rem';
+        msg.style.color = '#f0a040';
+        msg.style.lineHeight = '1.6';
+        const shortAddr = address.slice(0, 10) + '\u2026' + address.slice(-8);
+        msg.innerHTML = `Are you sure you want to <b style='color:#e04a3f'>delete</b> the selected wallet address?<br><span style='font-family:monospace;font-size:0.93em;color:#fff;background:#3a2a00;padding:0.13em 0.5em;border-radius:5px;margin-top:0.5em;display:inline-block'>${shortAddr}</span>`;
+        return msg;
+      }
+      // ─────────────────────────────────────────────────────────────────────
+
+      function copy(id) {
+        const text = document.getElementById(id).textContent;
+        const el = document.getElementById(id);
+        const orig = el.textContent;
+
+        function showCopied() {
+          el.textContent = 'Copied!';
+          setTimeout(() => el.textContent = orig, 1200);
+        }
+
+        // navigator.clipboard requires a secure context (HTTPS). Fall back to
+        // the legacy execCommand approach for plain HTTP environments.
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(text).then(showCopied).catch(() => fallbackCopy(text, showCopied));
+        } else {
+          fallbackCopy(text, showCopied);
+        }
+      }
+
+      function fallbackCopy(text, onSuccess) {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0';
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        try {
+          if (document.execCommand('copy')) onSuccess();
+        } finally {
+          document.body.removeChild(ta);
+        }
+      }
+
+      initDB().then(() => renderWallets()).catch(() => {
+        // IndexedDB is unavailable — most commonly in Safari private browsing mode.
+        // The app remains fully functional; wallets just won't be persisted.
+        const notice = document.createElement('p');
+        notice.textContent = 'Note: Wallet storage is unavailable in private browsing mode. Generated wallets will not be saved.';
+        notice.style.cssText = 'margin-top:0.75rem;font-size:0.78rem;color:#f0a040;';
+        document.querySelector('.card').appendChild(notice);
       });
-    }
 
-    function createWalletListItem(wallet) {
-      const li = document.createElement('li');
-      li.className = 'wallet-entry';
-      const short = wallet.address.slice(0, 10) + '\u2026' + wallet.address.slice(-8);
-      const dateStr = new Date(wallet.createdAt).toLocaleString();
-      const info = document.createElement('div');
-      info.className = 'wallet-entry-info';
-      const addrSpan = document.createElement('span');
-      addrSpan.className = 'wallet-entry-addr';
-      addrSpan.title = wallet.address;
-      addrSpan.textContent = short;
-      const dateSpan = document.createElement('span');
-      dateSpan.className = 'wallet-entry-date';
-      dateSpan.textContent = dateStr;
-      info.appendChild(addrSpan);
-      info.appendChild(dateSpan);
-      const actions = document.createElement('div');
-      actions.className = 'wallet-entry-actions';
-      const loadBtn = document.createElement('button');
-      loadBtn.className = 'btn-sm btn-load-wallet';
-      loadBtn.textContent = 'Load';
-      loadBtn.setAttribute('aria-label', 'Load wallet ' + wallet.address);
-      loadBtn.onclick = () => loadSavedWallet(wallet.id);
-      const delBtn = document.createElement('button');
-      delBtn.className = 'btn-sm btn-delete-wallet';
-      delBtn.textContent = 'Delete';
-      delBtn.setAttribute('aria-label', 'Delete wallet ' + wallet.address);
-      delBtn.onclick = () => confirmDeleteWallet(wallet.id, wallet.address);
-      actions.appendChild(loadBtn);
-      actions.appendChild(delBtn);
-      li.appendChild(info);
-      li.appendChild(actions);
-      return li;
-    }
-
-    function loadSavedWallet(id) {
-      getAllWallets().then(wallets => {
-        const wallet = wallets.find(w => w.id === id);
-        if (!wallet) return;
-        document.getElementById('address').textContent = wallet.address;
-        document.getElementById('privateKey').textContent = wallet.privateKey;
-        document.getElementById('result').style.display = 'block';
-        document.getElementById('btn-export').style.display = 'block';
-        document.getElementById('error').style.display = 'none';
-        document.getElementById('import-error').style.display = 'none';
-        fetchBalance(wallet.address);
-      });
-    }
-
-    function deleteSavedWallet(id) {
-      deleteWalletFromDB(id).then(() => renderWallets());
-    }
-
-    // Confirmation modal for deleting wallet
-    function confirmDeleteWallet(id, address) {
-      showDeleteModal(id, address);
-    }
-
-function showDeleteModal(id, address) {
-  // Remove any existing modal
-  const existing = document.getElementById('delete-modal');
-  if (existing) existing.remove();
-
-  const modal = document.createElement('div');
-  modal.id = 'delete-modal';
-  modal.style.position = 'fixed';
-  modal.style.top = '0';
-  modal.style.left = '0';
-  modal.style.width = '100vw';
-  modal.style.height = '100vh';
-  modal.style.background = 'rgba(30, 40, 60, 0.32)';
-  modal.style.display = 'flex';
-  modal.style.alignItems = 'center';
-  modal.style.justifyContent = 'center';
-  modal.style.zIndex = '10000';
-
-  const box = document.createElement('div');
-  box.style.background = '#2a1a00';
-  box.style.borderRadius = '8px';
-  box.style.boxShadow = '0 2px 16px rgba(0,0,0,0.18)';
-  box.style.padding = '2rem 2.2rem 1.5rem 2.2rem';
-  box.style.maxWidth = '94vw';
-  box.style.textAlign = 'center';
-  box.style.border = '1px solid #7a4800';
-
-  box.appendChild(createDeleteModalMsg(address));
-
-  const btnRow = document.createElement('div');
-  btnRow.style.display = 'flex';
-  btnRow.style.justifyContent = 'center';
-  btnRow.style.gap = '1.2rem';
-  btnRow.style.marginTop = '0.2rem';
-
-  const cancelBtn = document.createElement('button');
-  cancelBtn.textContent = 'Cancel';
-  cancelBtn.className = 'btn-sm btn-import';
-  cancelBtn.style.minWidth = '80px';
-  cancelBtn.onclick = () => modal.remove();
-
-  const confirmBtn = document.createElement('button');
-  confirmBtn.textContent = 'Delete';
-  confirmBtn.className = 'btn-sm btn-delete-wallet';
-  confirmBtn.style.background = '#e04a3f';
-  confirmBtn.style.color = '#fff';
-  confirmBtn.style.border = 'none';
-  confirmBtn.style.minWidth = '80px';
-  confirmBtn.style.boxShadow = '0 1.5px 6px rgba(224,74,63,0.08)';
-  confirmBtn.onmouseover = () => confirmBtn.style.background = '#c43c2e';
-  confirmBtn.onmouseout = () => confirmBtn.style.background = '#e04a3f';
-  confirmBtn.onclick = () => {
-    modal.remove();
-    deleteSavedWallet(id);
-  };
-
-  btnRow.appendChild(cancelBtn);
-  btnRow.appendChild(confirmBtn);
-  box.appendChild(btnRow);
-  modal.appendChild(box);
-  document.body.appendChild(modal);
-}
-
-function createDeleteModalMsg(address) {
-  const msg = document.createElement('div');
-  msg.style.marginBottom = '1.35rem';
-  msg.style.fontSize = '1.01rem';
-  msg.style.color = '#f0a040';
-  msg.style.lineHeight = '1.6';
-  const shortAddr = address.slice(0, 10) + '\u2026' + address.slice(-8);
-  msg.innerHTML = `Are you sure you want to <b style='color:#e04a3f'>delete</b> the selected wallet address?<br><span style='font-family:monospace;font-size:0.93em;color:#fff;background:#3a2a00;padding:0.13em 0.5em;border-radius:5px;margin-top:0.5em;display:inline-block'>${shortAddr}</span>`;
-  return msg;
-}
-    // ─────────────────────────────────────────────────────────────────────
-
-    function copy(id) {
-      const text = document.getElementById(id).textContent;
-      const el = document.getElementById(id);
-      const orig = el.textContent;
-
-      function showCopied() {
-        el.textContent = 'Copied!';
-        setTimeout(() => el.textContent = orig, 1200);
-      }
-
-      // navigator.clipboard requires a secure context (HTTPS). Fall back to
-      // the legacy execCommand approach for plain HTTP environments.
-      if (navigator.clipboard && window.isSecureContext) {
-        navigator.clipboard.writeText(text).then(showCopied).catch(() => fallbackCopy(text, showCopied));
-      } else {
-        fallbackCopy(text, showCopied);
-      }
-    }
-
-    function fallbackCopy(text, onSuccess) {
-      const ta = document.createElement('textarea');
-      ta.value = text;
-      ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0';
-      document.body.appendChild(ta);
-      ta.focus();
-      ta.select();
-      try {
-        if (document.execCommand('copy')) onSuccess();
-      } finally {
-        document.body.removeChild(ta);
-      }
-    }
-
-    initDB().then(() => renderWallets()).catch(() => {
-      // IndexedDB is unavailable — most commonly in Safari private browsing mode.
-      // The app remains fully functional; wallets just won't be persisted.
-      const notice = document.createElement('p');
-      notice.textContent = 'Note: Wallet storage is unavailable in private browsing mode. Generated wallets will not be saved.';
-      notice.style.cssText = 'margin-top:0.75rem;font-size:0.78rem;color:#f0a040;';
-      document.querySelector('.card').appendChild(notice);
-    });
-
-    document.getElementById('footer-year').textContent = new Date().getFullYear();
-  </script>
+      document.getElementById('footer-year').textContent = new Date().getFullYear();
+    </script>
 </body>
 
 </html>
