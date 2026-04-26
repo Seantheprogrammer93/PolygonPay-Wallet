@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 	"strings"
 )
 
@@ -154,11 +155,23 @@ func main() {
 	}
 
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		if r.URL.Path != "/" {
+		// Serve index.html at root
+		if r.URL.Path == "/" {
+			http.ServeFile(w, r, "./public/index.html")
+			return
+		}
+		// Whitelist: only serve files inside ./public
+		absPublic, _ := filepath.Abs("./public")
+		absTarget, err := filepath.Abs("./public" + r.URL.Path)
+		if err != nil || !strings.HasPrefix(absTarget, absPublic) {
 			serve404(w, r)
 			return
 		}
-		http.ServeFile(w, r, "./public/index.html")
+		if fi, err := os.Stat(absTarget); err == nil && !fi.IsDir() {
+			http.ServeFile(w, r, absTarget)
+			return
+		}
+		serve404(w, r)
 	})
 
 	// Serve all other static assets (css, js, etc.)
